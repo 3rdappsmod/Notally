@@ -76,19 +76,12 @@ class ReminderReceiver : BroadcastReceiver() {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val builder = Notification.Builder(context)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                builder.setCategory(Notification.CATEGORY_REMINDER)
-            } else builder.setCategory(Notification.CATEGORY_EVENT)
+            builder.setCategory(Notification.CATEGORY_REMINDER)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channelId = "com.omgodse.reminders"
-                val channel = NotificationChannel(channelId, "Reminders", NotificationManager.IMPORTANCE_HIGH)
-                manager.createNotificationChannel(channel)
-                builder.setChannelId(channelId)
-            } else {
-                builder.setPriority(Notification.PRIORITY_HIGH)
-                builder.setDefaults(Notification.DEFAULT_SOUND)
-            }
+            val channelId = "com.omgodse.reminders"
+            val channel = NotificationChannel(channelId, "Reminders", NotificationManager.IMPORTANCE_HIGH)
+            manager.createNotificationChannel(channel)
+            builder.setChannelId(channelId)
 
             builder.setSmallIcon(R.drawable.reminder)
             builder.setShowWhen(true)
@@ -264,9 +257,7 @@ class ReminderReceiver : BroadcastReceiver() {
 
         fun setReminder(context: Context, manager: AlarmManager, id: Long, timestamp: Long) {
             val broadcast = getReminderIntent(context, id)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
-            } else manager.setExact(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timestamp, broadcast)
         }
 
 

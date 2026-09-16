@@ -10,7 +10,6 @@ import android.content.Intent
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.SystemClock
-import androidx.annotation.RequiresApi
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.RecordAudio
 import com.omgodse.notally.audio.Status.PAUSED
@@ -18,7 +17,6 @@ import com.omgodse.notally.audio.Status.READY
 import com.omgodse.notally.audio.Status.RECORDING
 import com.omgodse.notally.miscellaneous.IO
 
-@RequiresApi(24)
 class AudioRecordService : Service() {
 
     var status = READY
@@ -33,12 +31,10 @@ class AudioRecordService : Service() {
         manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         builder = Notification.Builder(this)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "com.omgodse.audio"
-            val channel = NotificationChannel(channelId, "Audio Recordings", NotificationManager.IMPORTANCE_HIGH)
-            manager.createNotificationChannel(channel)
-            builder.setChannelId(channelId)
-        }
+        val channelId = "com.omgodse.audio"
+        val channel = NotificationChannel(channelId, "Audio Recordings", NotificationManager.IMPORTANCE_HIGH)
+        manager.createNotificationChannel(channel)
+        builder.setChannelId(channelId)
 
         builder.setSmallIcon(R.drawable.record_audio)
         builder.setOnlyAlertOnce(true)

@@ -3,7 +3,6 @@ package com.omgodse.notally.fragments
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -30,9 +29,7 @@ class Search : NotallyFragment() {
         binding?.RadioGroup?.check(checked)
 
         binding?.RadioGroup?.visibility = View.VISIBLE
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding?.RecyclerView?.scrollIndicators = View.SCROLL_INDICATOR_TOP
-        }
+        binding?.RecyclerView?.scrollIndicators = View.SCROLL_INDICATOR_TOP
 
         binding?.RadioGroup?.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {

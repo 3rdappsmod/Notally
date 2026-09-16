@@ -7,7 +7,6 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import androidx.core.content.ContextCompat
 import com.omgodse.notally.miscellaneous.IO
@@ -31,12 +30,10 @@ class AttachmentDeleteService : Service() {
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder = Notification.Builder(application)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "com.omgodse.fileUpdates"
-            val channel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
-            manager.createNotificationChannel(channel)
-            builder.setChannelId(channelId)
-        }
+        val channelId = "com.omgodse.fileUpdates"
+        val channel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
+        manager.createNotificationChannel(channel)
+        builder.setChannelId(channelId)
 
         builder.setContentTitle(getString(R.string.deleting_images))
         builder.setSmallIcon(R.drawable.notification_delete)

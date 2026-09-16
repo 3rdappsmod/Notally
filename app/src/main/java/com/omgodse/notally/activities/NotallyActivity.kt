@@ -24,7 +24,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -238,7 +237,6 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
-    @RequiresApi(24)
     private fun checkAudioPermission() {
         val permission = Manifest.permission.RECORD_AUDIO
         if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
@@ -368,9 +366,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun setupColor() {
         model.color.observe(this, Observer { color ->
             val colorInt = Operations.extractColor(color, this)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                window.statusBarColor = colorInt
-            }
+            window.statusBarColor = colorInt
             binding.root.setBackgroundColor(colorInt)
             binding.RecyclerView.setBackgroundColor(colorInt)
             binding.Toolbar.backgroundTintList = ColorStateList.valueOf(colorInt)
@@ -415,9 +411,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             if (progress.inProgress) {
                 dialog.show()
                 dialogBinding.ProgressBar.max = progress.total
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    dialogBinding.ProgressBar.setProgress(progress.current, true)
-                } else dialogBinding.ProgressBar.progress = progress.current
+                dialogBinding.ProgressBar.setProgress(progress.current, true)
                 dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
             } else dialog.dismiss()
         })
@@ -432,10 +426,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         recyclerView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         recyclerView.adapter = ErrorAdapter(errors)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            recyclerView.scrollIndicators = View.SCROLL_INDICATOR_TOP or View.SCROLL_INDICATOR_BOTTOM
-        }
+        recyclerView.scrollIndicators = View.SCROLL_INDICATOR_TOP or View.SCROLL_INDICATOR_BOTTOM
 
         val title = resources.getQuantityString(R.plurals.cant_add_images, errors.size, errors.size)
         MaterialAlertDialogBuilder(this)
@@ -659,9 +650,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
         menu.add(R.string.add_images, R.drawable.add_images) { selectImages() }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            menu.add(R.string.record_audio, R.drawable.record_audio) { checkAudioPermission() }
-        }
+        menu.add(R.string.record_audio, R.drawable.record_audio) { checkAudioPermission() }
 
         menu.add(R.string.set_reminder, R.drawable.reminder) { checkNotificationPermission() }
 

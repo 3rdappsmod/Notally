@@ -6,7 +6,6 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
@@ -16,7 +15,6 @@ import com.omgodse.notally.audio.Status
 import com.omgodse.notally.databinding.ActivityRecordAudioBinding
 import com.omgodse.notally.miscellaneous.IO
 
-@RequiresApi(24)
 class RecordAudio : AppCompatActivity() {
 
     private var service: AudioRecordService? = null

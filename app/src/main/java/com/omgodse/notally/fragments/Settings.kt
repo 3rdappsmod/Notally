@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -140,9 +139,7 @@ class Settings : Fragment() {
                     dialogBinding.Count.setText(R.string.calculating)
                 } else {
                     dialogBinding.ProgressBar.max = progress.total
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        dialogBinding.ProgressBar.setProgress(progress.current, true)
-                    } else dialogBinding.ProgressBar.progress = progress.current
+                    dialogBinding.ProgressBar.setProgress(progress.current, true)
                     dialogBinding.Count.text = getString(R.string.count, progress.current, progress.total)
                 }
                 dialog.show()

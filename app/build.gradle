@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId 'com.omgodse.notally'
-        minSdk 21
+        minSdk 26
         targetSdk 36
         versionCode 57
         versionName "6.2"
