@@ -56,7 +56,7 @@ android {
 }
 
 dependencies {
-    final def navVersion = "2.3.5"
+    final def navVersion = "2.10.1"
     final def roomVersion = "2.8.5"
 
     ksp "androidx.room:room-compiler:$roomVersion"
