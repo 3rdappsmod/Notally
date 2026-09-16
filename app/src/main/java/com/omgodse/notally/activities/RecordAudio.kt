@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,6 +26,7 @@ class RecordAudio : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityRecordAudioBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        onBackPressedDispatcher.addCallback(this, backCallback)
 
         val intent = Intent(this, AudioRecordService::class.java)
         startService(intent)
@@ -60,7 +62,7 @@ class RecordAudio : AppCompatActivity() {
             }
         }
 
-        binding.Toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.Toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     override fun onDestroy() {
@@ -75,17 +77,21 @@ class RecordAudio : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        val service = this.service
-        if (service != null) {
-            if (service.status != Status.READY) {
-                MaterialAlertDialogBuilder(this)
+    private val backCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            val service = this@RecordAudio.service
+            if (service != null && service.status != Status.READY) {
+                MaterialAlertDialogBuilder(this@RecordAudio)
                     .setMessage(R.string.save_recording)
                     .setPositiveButton(R.string.save) { _, _ -> stopRecording(service) }
                     .setNegativeButton(R.string.discard) { _, _ -> discard(service) }
                     .show()
-            } else super.onBackPressed()
-        } else super.onBackPressed()
+            } else {
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        }
     }
 
 

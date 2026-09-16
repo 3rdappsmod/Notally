@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -53,10 +54,16 @@ class MainActivity : AppCompatActivity() {
 
     private val model: BaseNoteModel by viewModels()
 
-    override fun onBackPressed() {
-        if (model.actionMode.enabled.value) {
-            model.actionMode.close(true)
-        } else super.onBackPressed()
+    private val backCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (model.actionMode.enabled.value) {
+                model.actionMode.close(true)
+            } else {
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -67,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        onBackPressedDispatcher.addCallback(this, backCallback)
 
         setSupportActionBar(binding.Toolbar)
         setupFAB()

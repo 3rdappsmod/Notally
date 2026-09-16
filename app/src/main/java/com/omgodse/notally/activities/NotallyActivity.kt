@@ -22,6 +22,7 @@ import android.view.ViewGroup.LayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -67,10 +68,16 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels()
 
-    override fun onBackPressed() {
-        if (model.searchEnabled.value) {
-            model.closeSearch()
-        } else super.onBackPressed()
+    private val backCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (model.searchEnabled.value) {
+                model.closeSearch()
+            } else {
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        }
     }
 
 
@@ -94,6 +101,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this, backCallback)
         model.type = type
         model.marker.color = ContextCompat.getColor(this, R.color.highlight)
         initialiseBinding()
@@ -568,7 +576,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
 
     private fun setupSearch() {
-        binding.Search.setNavigationOnClickListener { onBackPressed() }
+        binding.Search.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         val menu = binding.Search.menu
         menu.add(R.string.previous, R.drawable.previous) { model.findPrevious() }
