@@ -1,7 +1,7 @@
 package com.omgodse.notally.room.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -144,12 +144,12 @@ interface BaseNoteDao {
      *
      * Take for example, a request for all base notes having the label
      * 'Important' The base notes which instead have the label 'Unimportant'
-     * will also be returned. To prevent this, we use [Transformations.map] and
+     * will also be returned. To prevent this, we use [LiveData.map] and
      * filter the result accordingly.
      */
     fun getBaseNotesByLabel(label: String): LiveData<List<BaseNote>> {
         val result = getBaseNotesByLabel(label, Folder.NOTES)
-        return Transformations.map(result) { list -> list.filter { baseNote -> baseNote.labels.contains(label) } }
+        return result.map { list -> list.filter { baseNote -> baseNote.labels.contains(label) } }
     }
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder AND labels LIKE '%' || :label || '%' ORDER BY pinned DESC, timestamp DESC")
@@ -167,7 +167,7 @@ interface BaseNoteDao {
 
     fun getBaseNotesByKeyword(keyword: String, folder: Folder): LiveData<List<BaseNote>> {
         val result = getBaseNotesByKeywordImpl(keyword, folder)
-        return Transformations.map(result) { list -> list.filter { baseNote -> matchesKeyword(baseNote, keyword) } }
+        return result.map { list -> list.filter { baseNote -> matchesKeyword(baseNote, keyword) } }
     }
 
     @Query("SELECT * FROM BaseNote WHERE folder = :folder AND (title LIKE '%' || :keyword || '%' OR body LIKE '%' || :keyword || '%' OR items LIKE '%' || :keyword || '%' OR labels LIKE '%' || :keyword || '%') ORDER BY pinned DESC, timestamp DESC")
