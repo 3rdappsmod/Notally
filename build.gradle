@@ -7,12 +7,12 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:9.0.1'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.10'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.20'
     }
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version '2.2.10-2.0.2' apply false
+    id 'com.google.devtools.ksp' version '2.3.12' apply false
 }
 
 allprojects {
