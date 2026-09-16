@@ -33,7 +33,7 @@ class PreviewImageVH(private val binding: RecyclerPreviewImageBinding, onClick: 
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
-                    target: Target<Drawable>?,
+                    target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
                     binding.Message.visibility = View.VISIBLE
@@ -41,10 +41,10 @@ class PreviewImageVH(private val binding: RecyclerPreviewImageBinding, onClick: 
                 }
 
                 override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
+                    resource: Drawable,
+                    model: Any,
                     target: Target<Drawable>?,
-                    dataSource: DataSource?,
+                    dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
                     return false
