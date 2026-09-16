@@ -68,6 +68,9 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
 
+    implementation "androidx.documentfile:documentfile:1.1.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.11.0"
+
     implementation "org.ocpsoft.prettytime:prettytime:4.0.6.Final"
     implementation "com.google.android.material:material:1.4.0"
 
