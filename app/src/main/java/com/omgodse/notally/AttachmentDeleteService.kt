@@ -31,8 +31,8 @@ class AttachmentDeleteService : Service() {
         val builder = Notification.Builder(application)
 
         val channelId = "com.omgodse.fileUpdates"
-        val channel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
-        manager.createNotificationChannel(channel)
+        val notificationChannel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
+        manager.createNotificationChannel(notificationChannel)
         builder.setChannelId(channelId)
 
         builder.setContentTitle(getString(R.string.deleting_images))
