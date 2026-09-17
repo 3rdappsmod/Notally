@@ -55,6 +55,10 @@ android {
     }
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     ksp libs.androidx.room.compiler
     implementation libs.androidx.room.ktx
