@@ -86,7 +86,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var imageRoot = IO.getExternalImagesDirectory(app)
     var audioRoot = IO.getExternalAudioDirectory(app)
 
-    val reminder = MutableLiveData<Reminder>(null)
+    val reminder = MutableLiveData<Reminder?>(null)
     private val manager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     val searchBus = MutableLiveData<Event<Int>>()
