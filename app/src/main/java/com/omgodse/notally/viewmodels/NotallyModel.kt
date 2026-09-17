@@ -339,14 +339,15 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 audios.value = baseNote.audios
                 reminder.value = baseNote.reminder
             } else {
-                createBaseNote()
                 Toast.makeText(app, R.string.cant_find_note, Toast.LENGTH_LONG).show()
             }
-        } else createBaseNote()
+        }
     }
 
-    private suspend fun createBaseNote() {
-        id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
+    private suspend fun ensureBaseNoteExists() {
+        if (id == 0L) {
+            id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
+        }
     }
 
 
@@ -364,18 +365,41 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     suspend fun saveNote(): Long {
-        return withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
+        if (isEmpty()) {
+            return 0L
+        }
+        return withContext(Dispatchers.IO) {
+            val wasNewNote = id == 0L
+            val savedId = baseNoteDao.insert(getBaseNote())
+            if (wasNewNote) {
+                id = savedId
+            }
+            savedId
+        }
+    }
+
+    private fun isEmpty(): Boolean {
+        val bodyText = body.trimEnd().toString()
+        return title.isEmpty() &&
+            bodyText.isEmpty() &&
+            items.none { item -> item.body.isNotEmpty() } &&
+            images.value.isEmpty() &&
+            audios.value.isEmpty() &&
+            reminder.value == null
     }
 
     private suspend fun updateImages() {
+        ensureBaseNoteExists()
         withContext(Dispatchers.IO) { baseNoteDao.updateImages(id, images.value) }
     }
 
     private suspend fun updateAudios() {
+        ensureBaseNoteExists()
         withContext(Dispatchers.IO) { baseNoteDao.updateAudios(id, audios.value) }
     }
 
     private suspend fun updateReminder() {
+        ensureBaseNoteExists()
         withContext(Dispatchers.IO) { baseNoteDao.updateReminder(id, reminder.value) }
     }
 

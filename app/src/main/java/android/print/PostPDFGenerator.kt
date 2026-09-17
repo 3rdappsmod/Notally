@@ -2,9 +2,14 @@ package android.print
 
 import android.content.Context
 import android.os.ParcelFileDescriptor
+import android.util.Log
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import java.io.File
+
+private const val TAG = "PostPDFGenerator"
 
 /**
  * This class needs to be in android.print package to access the package private
@@ -20,6 +25,10 @@ object PostPDFGenerator {
             override fun onPageFinished(view: WebView?, url: String?) {
                 val adapter = webView.createPrintDocumentAdapter(file.nameWithoutExtension)
                 print(file, adapter, onResult)
+            }
+
+            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+                Log.w(TAG, "WebView load error during PDF export: code=${error.errorCode}, description=${error.description}, url=${request.url}")
             }
         }
     }
