@@ -2,6 +2,13 @@
 
 Use JDK 25 (including javac) and Android SDK Platform 37 (`platforms;android-37.0`). Set JAVA_HOME to the JDK 25 installation and ANDROID_HOME to the Android SDK, or set sdk.dir in an untracked local.properties. Use the checked-in Gradle wrapper; its distribution checksum is pinned. Java/Kotlin bytecode targets and the CI JDK are deliberately aligned at 25.
 
+The build uses AGP's built-in Kotlin support and new Android DSL. Do not restore
+`android.builtInKotlin=false`, `android.newDsl=false` or the separate
+`org.jetbrains.kotlin.android` plugin. Kotlin Parcelize remains required for
+attachment objects, and KSP remains required for Room code generation. The Java
+toolchain selects JDK 25; Kotlin's JVM target follows Android compileOptions.
+See [build migration notes](docs/builtin-kotlin-migration.md) for validation.
+
 The SDK change from the fork's base was targetSdk 35 → 36 and minSdk 21 → 26. compileSdk was already 36. The Android 17 migration raises both compileSdk and targetSdk to 37; see [migration notes](docs/android-17-migration.md). Android 8.0 is the minimum supported OS.
 
 ## Verify a change
