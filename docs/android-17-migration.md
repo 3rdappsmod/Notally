@@ -11,7 +11,13 @@ sdkmanager "platforms;android-37.0" "build-tools;36.0.0"
 ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease
 ```
 
-The PR workflow installs the same SDK packages. The existing required build
+The PR workflow first uses the SHA-pinned `android-actions/setup-android`
+action to prepare command-line tools, accept SDK licenses and add `sdkmanager`
+to PATH, then installs the same SDK packages. PR #40 initially failed with
+`sdkmanager: command not found` because this setup step was missing. Local
+SDK installation and actionlint could not establish tool availability on the
+GitHub runner; the corrected workflow still needs a successful hosted CI run.
+The existing required build
 check and Dependabot patch/minor auto-merge policy remain in effect.
 
 ## Behavior changes addressed
