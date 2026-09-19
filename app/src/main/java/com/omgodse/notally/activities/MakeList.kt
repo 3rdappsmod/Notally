@@ -2,6 +2,7 @@ package com.omgodse.notally.activities
 
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.miscellaneous.setOnNextAction
@@ -52,6 +53,8 @@ class MakeList : NotallyActivity(Type.LIST) {
     }
 
     override fun configureUI() {
+        // Keep the checklist visible when editing its title in landscape too.
+        binding.EnterTitle.imeOptions = binding.EnterTitle.imeOptions or EditorInfo.IME_FLAG_NO_FULLSCREEN
         binding.EnterTitle.setOnNextAction {
             moveToNext(-1)
         }

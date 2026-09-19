@@ -45,7 +45,7 @@
             android:layout_toEndOf="@id/CheckBox"
             android:background="@null"
             android:hint="@string/item"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionNext|flagNoFullscreen"
             android:inputType="textMultiLine"
             android:padding="8dp"
             android:textAppearance="?attr/textAppearanceBody1" />
