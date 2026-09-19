@@ -1,3 +1,8 @@
+### This fork
+This fork targets Android 16 (API 36), uses JDK 25, and maintains dependency updates through PRs. Dependabot patch/minor PRs auto-merge after required CI; major updates and human-authored PRs are merged manually. See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions, verification and the maintainer workflow.
+
+The store links below refer to the original app, not builds of this fork.
+
 ### Background
 Notally was created because I wanted to make something that was beautiful and at the same time, useful. It's extremely light, there are minimal dependencies and lines of code.
 
@@ -7,8 +12,7 @@ Notally was created because I wanted to make something that was beautiful and at
 * Auto backup
 * Search within notes
 * Adjustable text size
-* Support for Lollipop devices and up
-* APK size of 1.4 MB (1.8 MB uncompressed)
+* Support for Android 8.0 (Oreo, API 26) and up
 * Color, pin and label your notes for quick organisation
 * Complement your notes with pictures (JPG, PNG, WEBP)
 * Export notes as TXT, JSON, HTML or PDF files with formatting
