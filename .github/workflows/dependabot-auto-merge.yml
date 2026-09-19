@@ -1,5 +1,8 @@
 name: Dependabot auto-merge
 
+# Agreed policy: only Dependabot patch/minor PRs auto-merge after required CI.
+# Major updates and human-authored PRs are merged manually by the maintainer.
+# A third-party review is not required; keep master PR + build rules enabled.
 on: pull_request
 
 permissions:
@@ -9,6 +12,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == '3rdappsmod/Notally'
     steps:
       - name: Fetch Dependabot metadata

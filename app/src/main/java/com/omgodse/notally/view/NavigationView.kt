@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import androidx.core.view.children
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.omgodse.notally.R
@@ -36,9 +37,10 @@ class NavigationView(context: Context, attrs: AttributeSet) : MaterialCardView(c
     }
 
     override fun onApplyWindowInsets(insets: WindowInsets): WindowInsets {
-        val systemBars = insets.getInsets(WindowInsets.Type.systemBars())
+        val systemBars = WindowInsetsCompat.toWindowInsetsCompat(insets, this)
+            .getInsets(WindowInsetsCompat.Type.systemBars())
         linearLayout.setPadding(0, systemBars.top, 0, 0)
-        return WindowInsets.CONSUMED
+        return WindowInsetsCompat.CONSUMED.toWindowInsets() ?: insets
     }
 }
 

@@ -47,6 +47,8 @@ import com.omgodse.notally.room.Type
 import com.omgodse.notally.widget.WidgetProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
@@ -63,6 +65,9 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var isFirstInstance = true
 
     var type = Type.NOTE
+
+    private val persistenceMutex = Mutex()
+    private var deleted = false
 
     var id = 0L
     var folder = Folder.NOTES
@@ -292,22 +297,25 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         pinned.value = !pinned.value
     }
 
-    fun deleteReminder() {
-        viewModelScope.launch {
-            val copy = reminder.value
-            if (copy != null) {
+    fun deleteReminder() = viewModelScope.launch {
+        persistenceMutex.withLock {
+            if (deleted) return@withLock
+            if (reminder.value != null) {
+                baseNoteDao.updateReminder(id, null)
                 ReminderReceiver.deleteReminders(app, manager, listOf(id))
                 reminder.value = null
-                updateReminder()
             }
         }
     }
 
-    fun setReminder(reminder: Reminder) {
-        viewModelScope.launch {
-            ReminderReceiver.setReminder(app, manager, id, reminder.timestamp)
+    fun setReminder(reminder: Reminder) = viewModelScope.launch {
+        persistenceMutex.withLock {
+            if (deleted) return@withLock
+            ensureBaseNoteExists()
+            baseNoteDao.updateReminder(id, reminder)
             this@NotallyModel.reminder.value = reminder
-            updateReminder()
+            // Schedule only after the row and its real ID have been persisted.
+            ReminderReceiver.setReminder(app, manager, id, reminder.timestamp)
         }
     }
 
@@ -339,20 +347,28 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 audios.value = baseNote.audios
                 reminder.value = baseNote.reminder
             } else {
+                isNewNote = true
                 Toast.makeText(app, R.string.cant_find_note, Toast.LENGTH_LONG).show()
             }
         }
+        // Reserve a stable ID before enabling the editor. Instance-state saving must
+        // never capture 0 and then create the row asynchronously under a different ID.
+        persistenceMutex.withLock { ensureBaseNoteExists() }
     }
 
+    // Call only while holding persistenceMutex; Room dispatches suspend writes off main.
     private suspend fun ensureBaseNoteExists() {
         if (id == 0L) {
-            id = withContext(Dispatchers.IO) { baseNoteDao.insert(getBaseNote()) }
+            id = baseNoteDao.insert(getBaseNote())
         }
     }
 
 
     suspend fun deleteBaseNote() {
-        withContext(Dispatchers.IO) { baseNoteDao.delete(id) }
+        persistenceMutex.withLock {
+            baseNoteDao.delete(id)
+            deleted = true
+        }
         WidgetProvider.sendBroadcast(app, id)
         val attachments = ArrayList(images.value + audios.value)
         if (attachments.isNotEmpty()) {
@@ -364,18 +380,16 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    suspend fun saveNote(): Long {
-        if (isEmpty()) {
-            return 0L
+    suspend fun saveNote(discardEmptyDraft: Boolean = false): Long = persistenceMutex.withLock {
+        if (deleted || id == 0L) return@withLock 0L
+        // Existing notes must persist clearing their contents. A new, empty draft is
+        // discarded only on explicit editor exit, not on rotation/background saving.
+        if (discardEmptyDraft && isNewNote && isEmpty()) {
+            baseNoteDao.delete(id)
+            deleted = true
+            return@withLock 0L
         }
-        return withContext(Dispatchers.IO) {
-            val wasNewNote = id == 0L
-            val savedId = baseNoteDao.insert(getBaseNote())
-            if (wasNewNote) {
-                id = savedId
-            }
-            savedId
-        }
+        baseNoteDao.insert(getBaseNote())
     }
 
     private fun isEmpty(): Boolean {
@@ -385,30 +399,31 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
             items.none { item -> item.body.isNotEmpty() } &&
             images.value.isEmpty() &&
             audios.value.isEmpty() &&
-            reminder.value == null
+            reminder.value == null &&
+            labels.value.isEmpty() &&
+            !pinned.value &&
+            color.value == Color.DEFAULT
     }
 
-    private suspend fun updateImages() {
+    private suspend fun updateImages() = persistenceMutex.withLock {
+        if (deleted) return@withLock
         ensureBaseNoteExists()
-        withContext(Dispatchers.IO) { baseNoteDao.updateImages(id, images.value) }
+        baseNoteDao.updateImages(id, images.value)
     }
 
-    private suspend fun updateAudios() {
+    private suspend fun updateAudios() = persistenceMutex.withLock {
+        if (deleted) return@withLock
         ensureBaseNoteExists()
-        withContext(Dispatchers.IO) { baseNoteDao.updateAudios(id, audios.value) }
-    }
-
-    private suspend fun updateReminder() {
-        ensureBaseNoteExists()
-        withContext(Dispatchers.IO) { baseNoteDao.updateReminder(id, reminder.value) }
+        baseNoteDao.updateAudios(id, audios.value)
     }
 
 
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
-        val items = this.items.filter { item -> item.body.isNotEmpty() }
-        return BaseNote(id, type, folder, color.value, title, pinned.value, timestamp, labels.value, body, spans, items, images.value, audios.value, reminder.value)
+        val items = this.items.filter { item -> item.body.isNotEmpty() }.map { it.copy() }
+        return BaseNote(id, type, folder, color.value, title, pinned.value, timestamp, labels.value.toList(), body, spans, items,
+            images.value.map { it.copy() }, audios.value.map { it.copy() }, reminder.value)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {

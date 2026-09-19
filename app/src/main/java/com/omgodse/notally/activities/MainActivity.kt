@@ -54,15 +54,9 @@ class MainActivity : AppCompatActivity() {
 
     private val model: BaseNoteModel by viewModels()
 
-    private val backCallback = object : OnBackPressedCallback(true) {
+    private val backCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            if (model.actionMode.enabled.value) {
-                model.actionMode.close(true)
-            } else {
-                isEnabled = false
-                onBackPressedDispatcher.onBackPressed()
-                isEnabled = true
-            }
+            model.actionMode.close(true)
         }
     }
 
@@ -118,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         transition.excludeTarget(binding.NavigationView, true)
 
         model.actionMode.enabled.observe(this) { enabled ->
+            backCallback.isEnabled = enabled
             TransitionManager.beginDelayedTransition(binding.RelativeLayout, transition)
             if (enabled) {
                 binding.Toolbar.visibility = View.GONE

@@ -58,6 +58,7 @@ import com.omgodse.notally.room.Reminder
 import com.omgodse.notally.room.Type
 import com.omgodse.notally.viewmodels.NotallyModel
 import com.omgodse.notally.widget.WidgetProvider
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.Calendar
@@ -67,22 +68,21 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     internal lateinit var binding: ActivityNotallyBinding
     internal val model: NotallyModel by viewModels()
 
-    private val backCallback = object : OnBackPressedCallback(true) {
+    private val backCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            if (model.searchEnabled.value) {
-                model.closeSearch()
-            } else {
-                isEnabled = false
-                onBackPressedDispatcher.onBackPressed()
-                isEnabled = true
-            }
+            model.closeSearch()
         }
     }
 
+    private var initialization: Job? = null
+    private var finishingNote = false
 
     override fun finish() {
+        if (finishingNote) return
+        finishingNote = true
         lifecycleScope.launch {
-            model.saveNote()
+            initialization?.join()
+            model.saveNote(discardEmptyDraft = true)
             WidgetProvider.sendBroadcast(application, model.id)
             super.finish()
         }
@@ -90,7 +90,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        if (model.isFirstInstance) return
         outState.putLong("id", model.id)
+        outState.putBoolean("isNewNote", model.isNewNote)
         lifecycleScope.launch {
             model.saveNote()
             WidgetProvider.sendBroadcast(application, model.id)
@@ -106,14 +108,17 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         initialiseBinding()
         setContentView(binding.root)
 
-        lifecycleScope.launch {
+        initialization = lifecycleScope.launch {
             if (model.isFirstInstance) {
-                val persistedId = savedInstanceState?.getLong("id")
+                val persistedId = savedInstanceState?.takeIf { it.containsKey("id") }?.getLong("id")
                 val selectedId = intent.getLongExtra(Constants.SelectedBaseNote, 0L)
                 val id = persistedId ?: selectedId
                 model.setState(id)
+                if (savedInstanceState?.containsKey("isNewNote") == true) {
+                    model.isNewNote = savedInstanceState.getBoolean("isNewNote")
+                }
 
-                if (model.isNewNote && intent.action == Intent.ACTION_SEND) {
+                if (model.isNewNote && id == 0L && intent.action == Intent.ACTION_SEND) {
                     handleSharedNote()
                 }
 
@@ -599,6 +604,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         })
 
         model.searchEnabled.observe(this, Observer { enabled ->
+            backCallback.isEnabled = enabled
             TransitionManager.beginDelayedTransition(binding.ToolbarContainer, transition)
             if (enabled) {
                 binding.Search.visibility = View.VISIBLE

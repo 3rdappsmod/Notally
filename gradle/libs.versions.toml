@@ -1,4 +1,7 @@
 [versions]
+junit = "4.13.2"
+robolectric = "4.17"
+coroutinesTest = "1.10.2"
 agp = "9.4.0"
 kotlin = "2.4.20"
 ksp = "2.3.12"
@@ -14,6 +17,9 @@ swipeLayoutAndroid = "1.0.17"
 subsamplingScaleImageView = "3.10.0"
 
 [libraries]
+junit = { module = "junit:junit", version.ref = "junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
