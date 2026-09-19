@@ -33,11 +33,6 @@ updates:
         patterns:
           - "org.jetbrains.kotlin*"
           - "com.google.devtools.ksp*"
-    ignore:
-      # Keep the supported Glide 4 API until a dedicated Glide 5 migration PR
-      # verifies compileSdk requirements, listener APIs and image loading behavior.
-      - dependency-name: "com.github.bumptech.glide:glide"
-        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
