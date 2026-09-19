@@ -1,6 +1,9 @@
 package com.omgodse.notally.activities
 
+import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.doOnPreDraw
+import androidx.recyclerview.widget.RecyclerView
 import com.omgodse.notally.miscellaneous.setOnNextAction
 import com.omgodse.notally.recyclerview.ListItemListener
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
@@ -11,6 +14,42 @@ import com.omgodse.notally.room.Type
 class MakeList : NotallyActivity(Type.LIST) {
 
     private lateinit var adapter: MakeListAdapter
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val focused = binding.RecyclerView.findFocus()
+        val holder = focused?.let { binding.RecyclerView.findContainingViewHolder(it) } as? MakeListVH
+        if (holder != null && focused === holder.binding.EditText &&
+            holder.bindingAdapterPosition != RecyclerView.NO_POSITION) {
+            outState.putInt("listEditorPosition", holder.bindingAdapterPosition)
+            outState.putInt("listSelectionStart", holder.binding.EditText.selectionStart)
+            outState.putInt("listSelectionEnd", holder.binding.EditText.selectionEnd)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun restoreEditorState(state: Bundle) {
+        val position = state.getInt("listEditorPosition", RecyclerView.NO_POSITION)
+        if (position !in model.items.indices) {
+            super.restoreEditorState(state)
+            return
+        }
+        // Rows share a view ID and are recreated after asynchronous model loading.
+        // Restore the specific row only after RecyclerView has laid it out.
+        val recycler = binding.RecyclerView
+        recycler.scrollToPosition(position)
+        recycler.doOnPreDraw {
+            if (!isFinishing && !isDestroyed) {
+                val holder = recycler.findViewHolderForAdapterPosition(position) as? MakeListVH
+                val editor = holder?.binding?.EditText
+                if (editor != null && editor.isEnabled && editor.requestFocus()) {
+                    val start = state.getInt("listSelectionStart", 0).coerceIn(0, editor.length())
+                    val end = state.getInt("listSelectionEnd", start).coerceIn(0, editor.length())
+                    editor.setSelection(start, end)
+                    super.restoreEditorState(state)
+                }
+            }
+        }
+    }
 
     override fun configureUI() {
         binding.EnterTitle.setOnNextAction {

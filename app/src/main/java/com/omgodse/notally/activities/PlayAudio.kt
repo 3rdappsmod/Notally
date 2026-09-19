@@ -30,6 +30,7 @@ class PlayAudio : AppCompatActivity() {
 
     private var service: AudioPlayService? = null
     private lateinit var connection: ServiceConnection
+    private var bound = false
 
     private lateinit var audio: Audio
     private lateinit var binding: ActivityPlayAudioBinding
@@ -51,13 +52,18 @@ class PlayAudio : AppCompatActivity() {
                 service.initialise(audio)
                 service.onStateChange = { updateUI(service) }
                 this@PlayAudio.service = service
+                binding.AudioControlView.positionProvider = service::getCurrentPosition
                 updateUI(service)
             }
 
-            override fun onServiceDisconnected(name: ComponentName?) {}
+            override fun onServiceDisconnected(name: ComponentName?) {
+                binding.AudioControlView.setStarted(false)
+                binding.AudioControlView.positionProvider = null
+                this@PlayAudio.service = null
+            }
         }
 
-        bindService(intent, connection, BIND_AUTO_CREATE)
+        bound = bindService(intent, connection, BIND_AUTO_CREATE)
 
         binding.Play.setOnClickListener { service?.play() }
 
@@ -67,12 +73,15 @@ class PlayAudio : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        binding.AudioControlView.setStarted(false)
+        binding.AudioControlView.positionProvider = null
         super.onDestroy()
-        if (service != null) {
+        if (bound) {
             unbindService(connection)
-            requireNotNull(service).onStateChange = null
-            service = null
+            bound = false
         }
+        service?.onStateChange = null
+        service = null
         if (isFinishing) {
             val intent = Intent(this, AudioPlayService::class.java)
             stopService(intent)
