@@ -12,7 +12,7 @@ documentfile = "1.1.0"
 lifecycleLivedataKtx = "2.11.0"
 prettytime = "5.0.9.Final"
 material = "1.14.0"
-glide = "4.16.0"
+glide = "5.0.9"
 swipeLayoutAndroid = "1.0.17"
 subsamplingScaleImageView = "3.10.0"
 

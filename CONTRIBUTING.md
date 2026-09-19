@@ -32,7 +32,7 @@ Maintainer-managed GitHub settings (these cannot be encoded in a normal Git comm
 
 ## Dependency updates
 
-Dependabot checks Gradle and GitHub Actions weekly. Actions are pinned to commit SHAs and updated through PRs. Kotlin and KSP are grouped to validate compiler/plugin compatibility together; their version numbers no longer have to match. Glide major updates remain excluded until a dedicated migration verifies the SDK and image API requirements.
+Dependabot checks Gradle and GitHub Actions weekly. Actions are pinned to commit SHAs and updated through PRs. Kotlin and KSP are grouped to validate compiler/plugin compatibility together; their version numbers no longer have to match. Glide uses version 5.0.9 through the version catalog. Its temporary major-update exclusion has been removed after the dedicated migration; future major updates are proposed as PRs and require manual review, like other major updates. See [Glide 5 migration](docs/glide-5-migration.md) for validation and device checks.
 
 Fossify Notes inspired the catalog and CI structure. This fork's patch/minor auto-merge is an intentional addition, not an assumption that Fossify automatically merges dependency PRs. Fossify-specific Commons and Bundler workflows are not applicable here.
 
