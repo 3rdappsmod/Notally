@@ -26,7 +26,7 @@ import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-@Config(application = Application::class, sdk = [28])
+@Config(application = Application::class, sdk = [28, 37])
 class NotallyModelTest {
     private lateinit var app: Application
     private lateinit var database: NotallyDatabase

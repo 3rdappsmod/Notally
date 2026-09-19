@@ -141,6 +141,7 @@ class ViewImage : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = image.mimeType
             intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             // Necessary for sharesheet to show a preview of the image
             // Check -> https://commonsware.com/blog/2021/01/07/action_send-share-sheet-clipdata.html

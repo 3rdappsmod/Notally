@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.util.ReflectionHelpers
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = Application::class, sdk = [26, 30])
+@Config(application = Application::class, sdk = [26, 30, 37])
 class NavigationViewTest {
     @Suppress("DEPRECATION")
     @Test

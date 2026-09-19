@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdk = 36
+    compileSdk = 37
     namespace 'com.omgodse.notally'
 
     defaultConfig {
         applicationId 'com.omgodse.notally'
         minSdk 26
-        targetSdk 36
+        targetSdk 37
         versionCode 57
         versionName "6.2"
         resourceConfigurations += ['en', 'ca', 'cs', 'da', 'de', 'el', 'es', 'fr', 'hu', 'in', 'it', 'ja', 'ko', 'my', 'nb', 'nl', 'nn', 'pl', 'pt-rBR', 'pt-rPT', 'ro', 'ru', 'sk', 'sl', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh-rCN']

@@ -26,6 +26,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -76,6 +79,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private var initialization: Job? = null
     private var finishingNote = false
+    private var restoreKeyboard = false
 
     override fun finish() {
         if (finishingNote) return
@@ -90,6 +94,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putBoolean("editorImeVisible",
+            ViewCompat.getRootWindowInsets(binding.root)?.isVisible(WindowInsetsCompat.Type.ime()) == true)
         if (model.isFirstInstance) return
         outState.putLong("id", model.id)
         outState.putBoolean("isNewNote", model.isNewNote)
@@ -102,6 +108,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        restoreKeyboard = savedInstanceState?.getBoolean("editorImeVisible") == true
         onBackPressedDispatcher.addCallback(this, backCallback)
         model.type = type
         model.marker.color = ContextCompat.getColor(this, R.color.highlight)
@@ -133,6 +140,25 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         }
     }
 
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (restoreKeyboard) {
+            restoreKeyboard = false
+            lifecycleScope.launch {
+                initialization?.join()
+                // Android 17 no longer restores IME visibility after recreation.
+                // View state restoration retains the focused editor; only reopen
+                // the keyboard if it was visible before the configuration change.
+                binding.root.post {
+                    if (!isFinishing && !isDestroyed) {
+                        WindowCompat.getInsetsController(window, binding.root)
+                            .show(WindowInsetsCompat.Type.ime())
+                    }
+                }
+            }
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

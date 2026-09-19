@@ -43,7 +43,6 @@ class PlayAudio : AppCompatActivity() {
         binding.AudioControlView.setDuration(audio.duration)
 
         val intent = Intent(this, AudioPlayService::class.java)
-        startService(intent)
 
         connection = object : ServiceConnection {
 
@@ -91,7 +90,7 @@ class PlayAudio : AppCompatActivity() {
 
 
     private fun setupToolbar(binding: ActivityPlayAudioBinding) {
-        binding.Toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.Toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         binding.Toolbar.menu.add(R.string.share, R.drawable.share) { share() }
         binding.Toolbar.menu.add(R.string.save_to_device, R.drawable.save) { saveToDevice() }
@@ -107,6 +106,7 @@ class PlayAudio : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "audio/mp4"
             intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             val chooser = Intent.createChooser(intent, null)
             startActivity(chooser)

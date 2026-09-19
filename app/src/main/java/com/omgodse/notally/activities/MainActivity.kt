@@ -332,6 +332,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = mimeType
         intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         val chooser = Intent.createChooser(intent, null)
         startActivity(chooser)

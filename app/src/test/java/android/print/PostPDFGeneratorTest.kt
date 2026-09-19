@@ -13,7 +13,7 @@ import org.robolectric.annotation.Config
 import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = Application::class, sdk = [28])
+@Config(application = Application::class, sdk = [28, 37])
 class PostPDFGeneratorTest {
     @Test
     fun failedWriteDeletesPartialFileClosesDescriptorAndReportsOnce() {
