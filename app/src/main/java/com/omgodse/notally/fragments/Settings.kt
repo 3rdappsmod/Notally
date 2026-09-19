@@ -160,6 +160,7 @@ class Settings : Fragment() {
         if (log.exists()) {
             val uri = FileProvider.getUriForFile(app, "${app.packageName}.provider", log)
             intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
         try {

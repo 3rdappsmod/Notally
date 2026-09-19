@@ -1,5 +1,5 @@
 ### This fork
-This fork targets Android 16 (API 36), uses JDK 25, and maintains dependency updates through PRs. Dependabot patch/minor PRs auto-merge after required CI; major updates and human-authored PRs are merged manually. See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions, verification and the maintainer workflow.
+This fork targets Android 17 (API 37), uses JDK 25, and maintains dependency updates through PRs. Dependabot patch/minor PRs auto-merge after required CI; major updates and human-authored PRs are merged manually. See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions, verification and the maintainer workflow.
 
 The store links below refer to the original app, not builds of this fork.
 

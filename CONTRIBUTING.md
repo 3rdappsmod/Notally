@@ -1,8 +1,8 @@
 # Developing this fork
 
-Use JDK 25 (including javac) and Android SDK Platform 36. Set JAVA_HOME to the JDK 25 installation and ANDROID_HOME to the Android SDK, or set sdk.dir in an untracked local.properties. Use the checked-in Gradle wrapper; its distribution checksum is pinned. Java/Kotlin bytecode targets and the CI JDK are deliberately aligned at 25.
+Use JDK 25 (including javac) and Android SDK Platform 37 (`platforms;android-37.0`). Set JAVA_HOME to the JDK 25 installation and ANDROID_HOME to the Android SDK, or set sdk.dir in an untracked local.properties. Use the checked-in Gradle wrapper; its distribution checksum is pinned. Java/Kotlin bytecode targets and the CI JDK are deliberately aligned at 25.
 
-The SDK change from the fork's base was targetSdk 35 → 36 and minSdk 21 → 26. compileSdk was already 36. Android 8.0 is the minimum supported OS.
+The SDK change from the fork's base was targetSdk 35 → 36 and minSdk 21 → 26. compileSdk was already 36. The Android 17 migration raises both compileSdk and targetSdk to 37; see [migration notes](docs/android-17-migration.md). Android 8.0 is the minimum supported OS.
 
 ## Verify a change
 
@@ -46,7 +46,7 @@ Background/rotation saving preserves a draft instead of deleting it. The saved i
 
 Robolectric/Room regression tests cover alarm IDs/cancellation, cleared text and checklists, restoring an ID captured before saving into a new ViewModel, empty-draft cleanup, attachments/metadata and overlapping saves. This is not a substitute for a real device process-death test.
 
-Before release, manually verify on Android 8 and Android 16:
+Before release, manually verify on Android 8 and Android 17:
 
 1. New note → reminder → exit; verify delivery, cancellation and repeat behavior.
 2. Clear an existing text note/checklist completely, exit and reopen.
