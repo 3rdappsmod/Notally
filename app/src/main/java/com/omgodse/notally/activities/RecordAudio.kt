@@ -36,7 +36,10 @@ class RecordAudio : AppCompatActivity() {
                 updateUI(binding, requireNotNull(service))
             }
 
-            override fun onServiceDisconnected(name: ComponentName?) {}
+            override fun onServiceDisconnected(name: ComponentName?) {
+                service = null
+                backCallback.isEnabled = false
+            }
         }
 
         bindService(intent, connection, BIND_AUTO_CREATE)
@@ -75,7 +78,7 @@ class RecordAudio : AppCompatActivity() {
         }
     }
 
-    private val backCallback = object : OnBackPressedCallback(true) {
+    private val backCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
             val service = this@RecordAudio.service
             if (service != null && service.status != Status.READY) {
@@ -87,7 +90,6 @@ class RecordAudio : AppCompatActivity() {
             } else {
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
-                isEnabled = true
             }
         }
     }
@@ -106,6 +108,7 @@ class RecordAudio : AppCompatActivity() {
     }
 
     private fun updateUI(binding: ActivityRecordAudioBinding, service: AudioRecordService) {
+        backCallback.isEnabled = service.status != Status.READY
         binding.Timer.base = service.getBase()
         when (service.status) {
             Status.READY -> {
