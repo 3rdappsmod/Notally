@@ -41,6 +41,11 @@ android {
     }
 
 
+    lint {
+        // Existing untranslated strings only; new translation/API errors still fail CI.
+        baseline = file("lint-baseline.xml")
+    }
+
     testOptions {
         unitTests.includeAndroidResources = true
         unitTests.all {

@@ -27,15 +27,22 @@ updates:
       prefix-development: "chore"
       include: "scope"
     groups:
-      # ksp's version was pinned as <kotlin-version>-<ksp-version>, so it must move
-      # in lockstep with kotlin-gradle-plugin or the build fails with a version
-      # mismatch error. Bundling them forces Dependabot to bump both together.
+      # KSP now versions independently of Kotlin. Group them to test compiler/plugin
+      # compatibility together, not because their version numbers must match.
       kotlin:
         patterns:
           - "org.jetbrains.kotlin*"
           - "com.google.devtools.ksp*"
     ignore:
-      # Glide 5.x requires compileSdk 37, but AGP 9.0.1 (our current version) only
-      # supports up to compileSdk 36. Re-enable once AGP/compileSdk are raised.
+      # Keep the supported Glide 4 API until a dedicated Glide 5 migration PR
+      # verifies compileSdk requirements, listener APIs and image loading behavior.
       - dependency-name: "com.github.bumptech.glide:glide"
         update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
