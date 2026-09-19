@@ -25,6 +25,9 @@ class AudioControlView(context: Context, attrs: AttributeSet) : RelativeLayout(c
     private var duration = 0L
     private val recycle = StringBuilder(8)
 
+    // Read the player on every tick: its position can reset asynchronously on replay.
+    var positionProvider: (() -> Int)? = null
+
     private var seeking = false
     var onSeekComplete: ((milliseconds: Long) -> Unit)? = null
 
@@ -76,10 +79,8 @@ class AudioControlView(context: Context, attrs: AttributeSet) : RelativeLayout(c
 
     @Synchronized
     private fun updateComponents(now: Long) {
-        var milliseconds = now - base
-        if (milliseconds > duration) {
-            milliseconds = duration
-        }
+        val milliseconds = (positionProvider?.invoke()?.toLong() ?: (now - base))
+            .coerceIn(0L, duration)
         chronometer.text = DateUtils.formatElapsedTime(recycle, milliseconds / 1000)
         if (!seeking) {
             progress.value = milliseconds.toFloat()

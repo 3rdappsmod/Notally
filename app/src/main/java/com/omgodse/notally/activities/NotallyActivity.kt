@@ -79,7 +79,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     private var initialization: Job? = null
     private var finishingNote = false
-    private var restoreKeyboard = false
+    private var pendingEditorState: Bundle? = null
 
     override fun finish() {
         if (finishingNote) return
@@ -108,7 +108,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        restoreKeyboard = savedInstanceState?.getBoolean("editorImeVisible") == true
+        pendingEditorState = savedInstanceState
         onBackPressedDispatcher.addCallback(this, backCallback)
         model.type = type
         model.marker.color = ContextCompat.getColor(this, R.color.highlight)
@@ -143,20 +143,20 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
-        if (restoreKeyboard) {
-            restoreKeyboard = false
-            lifecycleScope.launch {
-                initialization?.join()
-                // Android 17 no longer restores IME visibility after recreation.
-                // View state restoration retains the focused editor; only reopen
-                // the keyboard if it was visible before the configuration change.
-                binding.root.post {
-                    if (!isFinishing && !isDestroyed) {
-                        WindowCompat.getInsetsController(window, binding.root)
-                            .show(WindowInsetsCompat.Type.ime())
-                    }
-                }
+        val state = pendingEditorState ?: return
+        pendingEditorState = null
+        lifecycleScope.launch {
+            initialization?.join()
+            binding.root.post {
+                if (!isFinishing && !isDestroyed) restoreEditorState(state)
             }
+        }
+    }
+
+    protected open fun restoreEditorState(state: Bundle) {
+        if (state.getBoolean("editorImeVisible")) {
+            WindowCompat.getInsetsController(window, binding.root)
+                .show(WindowInsetsCompat.Type.ime())
         }
     }
 
