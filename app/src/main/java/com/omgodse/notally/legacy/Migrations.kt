@@ -13,7 +13,7 @@ object Migrations {
 
     fun clearAllLabels(app: Application) {
         val preferences = getLabelsPreferences(app)
-        preferences.edit().clear().commit()
+        preferences.edit().clear().apply()
     }
 
     fun clearAllFolders(app: Application) {

@@ -10,7 +10,7 @@ class AudioVH(private val binding: RecyclerAudioBinding, onClick: (Int) -> Unit,
     RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.root.setOnClickListener { onClick(adapterPosition) }
+        binding.root.setOnClickListener { onClick(bindingAdapterPosition) }
     }
 
     fun bind(audio: Audio) {

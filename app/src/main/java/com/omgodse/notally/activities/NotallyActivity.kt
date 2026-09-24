@@ -26,6 +26,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -176,7 +177,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                     }
                 }
                 REQUEST_VIEW_IMAGES -> {
-                    val list = data?.getParcelableArrayListExtra<Image>(ViewImage.DELETED_IMAGES)
+                    val list = data?.let { IntentCompat.getParcelableArrayListExtra(it, ViewImage.DELETED_IMAGES, Image::class.java) }
                     if (!list.isNullOrEmpty()) {
                         model.deleteImages(list)
                     }
@@ -189,7 +190,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 }
                 REQUEST_RECORD_AUDIO -> model.addAudio()
                 REQUEST_PLAY_AUDIO -> {
-                    val audio = data?.getParcelableExtra<Audio>(PlayAudio.AUDIO)
+                    val audio = data?.let { IntentCompat.getParcelableExtra(it, PlayAudio.AUDIO, Audio::class.java) }
                     if (audio != null) {
                         model.deleteAudio(audio)
                     }

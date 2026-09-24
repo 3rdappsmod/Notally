@@ -17,7 +17,7 @@ class PreviewImageVH(private val binding: RecyclerPreviewImageBinding, onClick: 
     RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.root.setOnClickListener { onClick(adapterPosition) }
+        binding.root.setOnClickListener { onClick(bindingAdapterPosition) }
     }
 
     fun bind(file: File?) {

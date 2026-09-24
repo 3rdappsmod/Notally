@@ -74,14 +74,14 @@ class ReminderReceiver : BroadcastReceiver() {
 
         private fun sendNotification(context: Context, baseNote: BaseNote) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val builder = Notification.Builder(context)
-
-            builder.setCategory(Notification.CATEGORY_REMINDER)
 
             val channelId = "com.omgodse.reminders"
             val channel = NotificationChannel(channelId, "Reminders", NotificationManager.IMPORTANCE_HIGH)
             manager.createNotificationChannel(channel)
-            builder.setChannelId(channelId)
+
+            val builder = Notification.Builder(context, channelId)
+
+            builder.setCategory(Notification.CATEGORY_REMINDER)
 
             builder.setSmallIcon(R.drawable.reminder)
             builder.setShowWhen(true)

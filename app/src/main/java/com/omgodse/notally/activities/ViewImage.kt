@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -38,14 +39,14 @@ class ViewImage : AppCompatActivity() {
         val binding = ActivityViewImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val savedList = savedInstanceState?.getParcelableArrayList<Image>(DELETED_IMAGES)
+        val savedList = savedInstanceState?.let { BundleCompat.getParcelableArrayList(it, DELETED_IMAGES, Image::class.java) }
         deletedImages = savedList ?: ArrayList()
 
         val result = Intent()
         result.putExtra(DELETED_IMAGES, deletedImages)
         setResult(RESULT_OK, result)
 
-        val savedImage = savedInstanceState?.getParcelable<Image>(CURRENT_IMAGE)
+        val savedImage = savedInstanceState?.let { BundleCompat.getParcelable(it, CURRENT_IMAGE, Image::class.java) }
         if (savedImage != null) {
             currentImage = savedImage
         }

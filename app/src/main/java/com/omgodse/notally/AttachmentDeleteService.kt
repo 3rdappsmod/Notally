@@ -9,11 +9,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import com.omgodse.notally.miscellaneous.IO
 import com.omgodse.notally.room.Attachment
 import com.omgodse.notally.room.Audio
 import com.omgodse.notally.room.Image
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
@@ -26,14 +28,15 @@ class AttachmentDeleteService : Service() {
     private val scope = MainScope()
     private val channel = Channel<ArrayList<Attachment>>()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreate() {
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val builder = Notification.Builder(application)
 
         val channelId = "com.omgodse.fileUpdates"
         val notificationChannel = NotificationChannel(channelId, "Backups and Images", NotificationManager.IMPORTANCE_DEFAULT)
         manager.createNotificationChannel(notificationChannel)
-        builder.setChannelId(channelId)
+
+        val builder = Notification.Builder(application, channelId)
 
         builder.setContentTitle(getString(R.string.deleting_images))
         builder.setSmallIcon(R.drawable.notification_delete)
@@ -79,7 +82,7 @@ class AttachmentDeleteService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         scope.launch {
-            val list = requireNotNull(intent).getParcelableArrayListExtra<Attachment>(EXTRA_ATTACHMENTS)
+            val list = IntentCompat.getParcelableArrayListExtra(requireNotNull(intent), EXTRA_ATTACHMENTS, Attachment::class.java)
             withContext(Dispatchers.IO) {
                 channel.send(requireNotNull(list))
             }

@@ -1,7 +1,7 @@
 package com.omgodse.notally.preferences
 
 import android.app.Application
-import android.preference.PreferenceManager
+import android.content.Context
 
 /**
  * Custom implementation of androidx.preference library
@@ -12,7 +12,9 @@ import android.preference.PreferenceManager
  */
 class Preferences private constructor(app: Application) {
 
-    private val preferences = PreferenceManager.getDefaultSharedPreferences(app)
+    // Matches the file name android.preference.PreferenceManager.getDefaultSharedPreferences()
+    // has always used, so existing users' settings keep loading from the same file.
+    private val preferences = app.getSharedPreferences("${app.packageName}_preferences", Context.MODE_PRIVATE)
     private val editor = preferences.edit()
 
     // Main thread (unfortunately)

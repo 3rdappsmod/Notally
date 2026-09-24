@@ -23,20 +23,20 @@ class MakeListVH(
         binding.EditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
 
         binding.EditText.setOnNextAction {
-            listener.moveToNext(adapterPosition)
+            listener.moveToNext(bindingAdapterPosition)
         }
 
         binding.EditText.doAfterTextChanged { text ->
-            listener.textChanged(adapterPosition, requireNotNull(text).trim().toString())
+            listener.textChanged(bindingAdapterPosition, requireNotNull(text).trim().toString())
         }
 
         binding.Delete.setOnClickListener {
-            listener.delete(adapterPosition)
+            listener.delete(bindingAdapterPosition)
         }
 
         binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
             binding.EditText.isEnabled = !isChecked
-            listener.checkedChanged(adapterPosition, isChecked)
+            listener.checkedChanged(bindingAdapterPosition, isChecked)
         }
 
         binding.DragHandle.setOnTouchListener { _, event ->

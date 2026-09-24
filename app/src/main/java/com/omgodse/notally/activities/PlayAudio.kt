@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.omgodse.notally.R
@@ -40,7 +41,7 @@ class PlayAudio : AppCompatActivity() {
         binding = ActivityPlayAudioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        audio = requireNotNull(intent.getParcelableExtra(AUDIO))
+        audio = requireNotNull(IntentCompat.getParcelableExtra(intent, AUDIO, Audio::class.java))
         binding.AudioControlView.setDuration(audio.duration)
 
         val intent = Intent(this, AudioPlayService::class.java)
