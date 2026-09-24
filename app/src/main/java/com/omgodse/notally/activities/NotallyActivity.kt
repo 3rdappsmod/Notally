@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -171,8 +172,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, backCallback)
         model.type = type
         model.marker.color = ContextCompat.getColor(this, R.color.highlight)
+        enableEdgeToEdge()
         initialiseBinding()
         setContentView(binding.root)
+        setupInsets()
 
         initialization = lifecycleScope.launch {
             if (model.isFirstInstance) {
@@ -220,6 +223,26 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     protected fun showIme(view: View) {
         WindowCompat.getInsetsController(window, view).show(WindowInsetsCompat.Type.ime())
+    }
+
+    private fun setupInsets() {
+        val root = binding.root
+        val initialLeft = root.paddingLeft
+        val initialTop = root.paddingTop
+        val initialRight = root.paddingRight
+        val initialBottom = root.paddingBottom
+
+        ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            view.setPadding(
+                initialLeft + bars.left,
+                initialTop + bars.top,
+                initialRight + bars.right,
+                initialBottom + bars.bottom,
+            )
+            insets
+        }
+        ViewCompat.requestApplyInsets(root)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -412,11 +435,11 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun setupColor() {
         model.color.observe(this, Observer { color ->
             val colorInt = Operations.extractColor(color, this)
-            window.statusBarColor = colorInt
             binding.root.setBackgroundColor(colorInt)
             binding.RecyclerView.setBackgroundColor(colorInt)
             binding.Toolbar.backgroundTintList = ColorStateList.valueOf(colorInt)
             binding.Search.backgroundTintList = ColorStateList.valueOf(colorInt)
+            WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = Operations.isColorLight(colorInt)
         })
     }
 

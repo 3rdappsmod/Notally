@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
 import com.google.android.material.shape.RoundedCornerTreatment
@@ -76,6 +77,13 @@ object Operations {
             Color.CLAY -> R.color.Clay
         }
         return ContextCompat.getColor(context, id)
+    }
+
+    // Whether black status/navigation bar icons contrast better against this background than white ones
+    fun isColorLight(backgroundColor: Int): Boolean {
+        val blackContrast = ColorUtils.calculateContrast(android.graphics.Color.BLACK, backgroundColor)
+        val whiteContrast = ColorUtils.calculateContrast(android.graphics.Color.WHITE, backgroundColor)
+        return blackContrast >= whiteContrast
     }
 
 

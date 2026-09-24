@@ -33,10 +33,6 @@
 
     <style name="Widget" parent="AppTheme" />
 
-    <style name="MainActivity" parent="AppTheme">
-        <item name="android:statusBarColor">@color/Transparent</item>
-    </style>
-
 
     <style name="TextAppearance.Headline6.Toolbar">
         <item name="android:textSize">18sp</item>
