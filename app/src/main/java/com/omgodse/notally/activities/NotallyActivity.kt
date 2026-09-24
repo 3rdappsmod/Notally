@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -75,6 +76,63 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private val backCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
             model.closeSearch()
+        }
+    }
+
+    private val addImagesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uri = result.data?.data
+            val clipData = result.data?.clipData
+            if (uri != null) {
+                val uris = arrayOf(uri)
+                model.addImages(uris)
+            } else if (clipData != null) {
+                val uris = Array(clipData.itemCount) { index -> clipData.getItemAt(index).uri }
+                model.addImages(uris)
+            }
+        }
+    }
+
+    private val viewImagesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val list = result.data?.let { IntentCompat.getParcelableArrayListExtra(it, ViewImage.DELETED_IMAGES, Image::class.java) }
+            if (!list.isNullOrEmpty()) {
+                model.deleteImages(list)
+            }
+        }
+    }
+
+    private val selectLabelsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val list = result.data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
+            if (list != null && list != model.labels.value) {
+                model.labels.value = list
+            }
+        }
+    }
+
+    private val recordAudioLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            model.addAudio()
+        }
+    }
+
+    private val playAudioLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val audio = result.data?.let { IntentCompat.getParcelableExtra(it, PlayAudio.AUDIO, Audio::class.java) }
+            if (audio != null) {
+                model.deleteAudio(audio)
+            }
+        }
+    }
+
+    private val alarmPermissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        // Bug in Samsung: Even if permission was granted result code is RESULT_CANCELED
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (manager.canScheduleExactAlarms()) {
+                displayReminderDialog()
+            }
         }
     }
 
@@ -156,56 +214,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     protected open fun restoreEditorState(state: Bundle) {
         if (state.getBoolean("editorImeVisible")) {
-            WindowCompat.getInsetsController(window, binding.root)
-                .show(WindowInsetsCompat.Type.ime())
+            showIme(binding.root)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_ADD_IMAGES -> {
-                    val uri = data?.data
-                    val clipData = data?.clipData
-                    if (uri != null) {
-                        val uris = arrayOf(uri)
-                        model.addImages(uris)
-                    } else if (clipData != null) {
-                        val uris = Array(clipData.itemCount) { index -> clipData.getItemAt(index).uri }
-                        model.addImages(uris)
-                    }
-                }
-                REQUEST_VIEW_IMAGES -> {
-                    val list = data?.let { IntentCompat.getParcelableArrayListExtra(it, ViewImage.DELETED_IMAGES, Image::class.java) }
-                    if (!list.isNullOrEmpty()) {
-                        model.deleteImages(list)
-                    }
-                }
-                REQUEST_SELECT_LABELS -> {
-                    val list = data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
-                    if (list != null && list != model.labels.value) {
-                        model.labels.value = list
-                    }
-                }
-                REQUEST_RECORD_AUDIO -> model.addAudio()
-                REQUEST_PLAY_AUDIO -> {
-                    val audio = data?.let { IntentCompat.getParcelableExtra(it, PlayAudio.AUDIO, Audio::class.java) }
-                    if (audio != null) {
-                        model.deleteAudio(audio)
-                    }
-                }
-            }
-        }
-        // Bug in Samsung: Even if permission was granted result code is RESULT_CANCELED
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (requestCode == REQUEST_ALARM_PERMISSION) {
-                val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                if (manager.canScheduleExactAlarms()) {
-                    displayReminderDialog()
-                }
-            }
-        }
+    protected fun showIme(view: View) {
+        WindowCompat.getInsetsController(window, view).show(WindowInsetsCompat.Type.ime())
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -296,7 +310,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                     .setPositiveButton(R.string.continue_) { _, _ ->
                         val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                         intent.data = Uri.parse("package:$packageName")
-                        startActivityForResult(intent, REQUEST_ALARM_PERMISSION)
+                        alarmPermissionLauncher.launch(intent)
                     }
                     .show()
             }
@@ -324,7 +338,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun recordAudio() {
         if (model.audioRoot != null) {
             val intent = Intent(this, RecordAudio::class.java)
-            startActivityForResult(intent, REQUEST_RECORD_AUDIO)
+            recordAudioLauncher.launch(intent)
         } else Toast.makeText(this, R.string.insert_an_sd_card_audio, Toast.LENGTH_LONG).show()
     }
 
@@ -347,7 +361,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResult(intent, REQUEST_ADD_IMAGES)
+            addImagesLauncher.launch(intent)
         } else Toast.makeText(this, R.string.insert_an_sd_card_images, Toast.LENGTH_LONG).show()
     }
 
@@ -363,7 +377,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun label() {
         val intent = Intent(this, SelectLabels::class.java)
         intent.putStringArrayListExtra(SelectLabels.SELECTED_LABELS, model.labels.value)
-        startActivityForResult(intent, REQUEST_SELECT_LABELS)
+        selectLabelsLauncher.launch(intent)
     }
 
     private fun delete() {
@@ -412,7 +426,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             val intent = Intent(this, ViewImage::class.java)
             intent.putExtra(ViewImage.POSITION, position)
             intent.putExtra(Constants.SelectedBaseNote, model.id)
-            startActivityForResult(intent, REQUEST_VIEW_IMAGES)
+            viewImagesLauncher.launch(intent)
         }
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -475,7 +489,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 val audio = model.audios.value[position]
                 val intent = Intent(this, PlayAudio::class.java)
                 intent.putExtra(PlayAudio.AUDIO, audio)
-                startActivityForResult(intent, REQUEST_PLAY_AUDIO)
+                playAudioLauncher.launch(intent)
             }
         }
         binding.AudioRecyclerView.adapter = adapter
@@ -614,7 +628,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             override fun onTransitionEnd(transition: Transition) {
                 if (binding.Search.visibility == View.VISIBLE) {
                     binding.EnterSearchKeyword.requestFocus()
-                    manager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
+                    showIme(binding.EnterSearchKeyword)
                 } else {
                     binding.EnterSearchKeyword.text.clear()
                     manager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
@@ -752,13 +766,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQUEST_ADD_IMAGES = 30
-        private const val REQUEST_VIEW_IMAGES = 31
         private const val REQUEST_NOTIFICATION_PERMISSION = 32
-        private const val REQUEST_SELECT_LABELS = 33
-        private const val REQUEST_RECORD_AUDIO = 34
-        private const val REQUEST_PLAY_AUDIO = 35
         private const val REQUEST_AUDIO_PERMISSION = 36
-        private const val REQUEST_ALARM_PERMISSION = 37
     }
 }

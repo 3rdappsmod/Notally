@@ -1,6 +1,5 @@
 package com.omgodse.notally.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,10 +10,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
 import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
@@ -60,6 +62,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val exportFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.data?.let { uri ->
+                model.writeCurrentFileToUri(uri)
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(configuration)
     }
@@ -76,16 +86,6 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
         setupSearch()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_EXPORT_FILE && resultCode == Activity.RESULT_OK) {
-            data?.data?.let { uri ->
-                model.writeCurrentFileToUri(uri)
-            }
-        }
-    }
-
 
     private fun setupFAB() {
         binding.TakeNote.setOnClickListener {
@@ -345,7 +345,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(Intent.EXTRA_TITLE, file.nameWithoutExtension)
 
         model.currentFile = file
-        startActivityForResult(intent, REQUEST_EXPORT_FILE)
+        exportFileLauncher.launch(intent)
     }
 
 
@@ -391,7 +391,7 @@ class MainActivity : AppCompatActivity() {
         if (destination.id == R.id.Search) {
             binding.EnterSearchKeyword.visibility = View.VISIBLE
             binding.EnterSearchKeyword.requestFocus()
-            inputManager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
+            WindowCompat.getInsetsController(window, binding.EnterSearchKeyword).show(WindowInsetsCompat.Type.ime())
         } else {
             binding.EnterSearchKeyword.visibility = View.GONE
             inputManager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
@@ -418,9 +418,5 @@ class MainActivity : AppCompatActivity() {
         binding.EnterSearchKeyword.doAfterTextChanged { text ->
             model.updateSearchKeyword(requireNotNull(text).trim().toString())
         }
-    }
-
-    companion object {
-        private const val REQUEST_EXPORT_FILE = 10
     }
 }
