@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
@@ -35,6 +36,14 @@ class PlayAudio : AppCompatActivity() {
 
     private lateinit var audio: Audio
     private lateinit var binding: ActivityPlayAudioBinding
+
+    private val exportFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.data?.let { uri ->
+                writeAudioToUri(uri)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,16 +98,6 @@ class PlayAudio : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_EXPORT_FILE && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                writeAudioToUri(uri)
-            }
-        }
-    }
-
-
     private fun setupToolbar(binding: ActivityPlayAudioBinding) {
         binding.Toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
@@ -149,7 +148,7 @@ class PlayAudio : AppCompatActivity() {
             val title = formatter.format(audio.timestamp)
 
             intent.putExtra(Intent.EXTRA_TITLE, title)
-            startActivityForResult(intent, REQUEST_EXPORT_FILE)
+            exportFileLauncher.launch(intent)
         }
     }
 
@@ -191,6 +190,5 @@ class PlayAudio : AppCompatActivity() {
 
     companion object {
         const val AUDIO = "AUDIO"
-        private const val REQUEST_EXPORT_FILE = 50
     }
 }

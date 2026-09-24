@@ -1,6 +1,5 @@
 package com.omgodse.notally.fragments
 
-import android.app.Activity
 import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -10,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
@@ -30,6 +30,18 @@ import com.omgodse.notally.viewmodels.BaseNoteModel
 class Settings : Fragment() {
 
     private val model: BaseNoteModel by activityViewModels()
+
+    private val importBackupLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let { model.importBackup(it) }
+    }
+
+    private val exportBackupLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+        uri?.let { model.exportBackup(it) }
+    }
+
+    private val chooseFolderLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        uri?.let { model.setAutoBackupPath(it) }
+    }
 
     private fun setupBinding(binding: FragmentSettingsBinding) {
         model.preferences.view.observe(viewLifecycleOwner) { value ->
@@ -95,33 +107,12 @@ class Settings : Fragment() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            intent?.data?.let { uri ->
-                when (requestCode) {
-                    REQUEST_IMPORT_BACKUP -> model.importBackup(uri)
-                    REQUEST_EXPORT_BACKUP -> model.exportBackup(uri)
-                    REQUEST_CHOOSE_FOLDER -> model.setAutoBackupPath(uri)
-                }
-            }
-        }
-    }
-
-
     private fun exportBackup() {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        intent.type = "application/zip"
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.putExtra(Intent.EXTRA_TITLE, "Notally Backup")
-        startActivityForResult(intent, REQUEST_EXPORT_BACKUP)
+        exportBackupLauncher.launch("Notally Backup")
     }
 
     private fun importBackup() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "*/*"
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/zip", "text/xml"))
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, REQUEST_IMPORT_BACKUP)
+        importBackupLauncher.launch(arrayOf("application/zip", "text/xml"))
     }
 
     private fun setupProgressDialog(titleId: Int, liveData: MutableLiveData<Progress>) {
@@ -192,8 +183,7 @@ class Settings : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.notes_will_be)
             .setPositiveButton(R.string.choose_folder) { _, _ ->
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                startActivityForResult(intent, REQUEST_CHOOSE_FOLDER)
+                chooseFolderLauncher.launch(null)
             }
             .show()
     }
@@ -268,11 +258,5 @@ class Settings : Fragment() {
         } catch (exception: ActivityNotFoundException) {
             Toast.makeText(requireContext(), R.string.install_a_browser, Toast.LENGTH_LONG).show()
         }
-    }
-
-    companion object {
-        private const val REQUEST_IMPORT_BACKUP = 20
-        private const val REQUEST_EXPORT_BACKUP = 21
-        private const val REQUEST_CHOOSE_FOLDER = 22
     }
 }

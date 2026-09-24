@@ -1,7 +1,6 @@
 package com.omgodse.notally.activities
 
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.RecyclerView
@@ -107,12 +106,11 @@ class MakeList : NotallyActivity(Type.LIST) {
         val listItem = ListItem(String(), false)
         model.items.add(listItem)
         adapter.notifyItemInserted(position)
-        val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
             if (viewHolder != null) {
                 viewHolder.binding.EditText.requestFocus()
-                inputManager.showSoftInput(viewHolder.binding.EditText, InputMethodManager.SHOW_IMPLICIT)
+                showIme(viewHolder.binding.EditText)
             }
         }
     }

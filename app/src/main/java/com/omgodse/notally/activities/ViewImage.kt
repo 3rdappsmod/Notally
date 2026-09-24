@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.os.BundleCompat
@@ -33,6 +34,14 @@ class ViewImage : AppCompatActivity() {
 
     private var currentImage: Image? = null
     private lateinit var deletedImages: ArrayList<Image>
+
+    private val exportFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.data?.let { uri ->
+                writeImageToUri(uri)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,16 +88,6 @@ class ViewImage : AppCompatActivity() {
         outState.putParcelable(CURRENT_IMAGE, currentImage)
         outState.putParcelableArrayList(DELETED_IMAGES, deletedImages)
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_EXPORT_FILE && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                writeImageToUri(uri)
-            }
-        }
-    }
-
 
     private fun setupToolbar(binding: ActivityViewImageBinding, adapter: ImageAdapter) {
         binding.Toolbar.setNavigationOnClickListener { finish() }
@@ -165,7 +164,7 @@ class ViewImage : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_TITLE, "Notally Image")
 
             currentImage = image
-            startActivityForResult(intent, REQUEST_EXPORT_FILE)
+            exportFileLauncher.launch(intent)
         }
     }
 
@@ -207,6 +206,5 @@ class ViewImage : AppCompatActivity() {
         const val POSITION = "POSITION"
         const val CURRENT_IMAGE = "CURRENT_IMAGE"
         const val DELETED_IMAGES = "DELETED_IMAGES"
-        private const val REQUEST_EXPORT_FILE = 40
     }
 }
