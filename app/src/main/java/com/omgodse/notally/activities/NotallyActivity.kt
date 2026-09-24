@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -171,7 +172,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, backCallback)
         model.type = type
         model.marker.color = ContextCompat.getColor(this, R.color.highlight)
-        WindowCompat.enableEdgeToEdge(window)
+        enableEdgeToEdge()
         initialiseBinding()
         setContentView(binding.root)
         setupInsets()
