@@ -37,10 +37,10 @@ class NavigationView(context: Context, attrs: AttributeSet) : MaterialCardView(c
     }
 
     override fun onApplyWindowInsets(insets: WindowInsets): WindowInsets {
-        val systemBars = WindowInsetsCompat.toWindowInsetsCompat(insets, this)
-            .getInsets(WindowInsetsCompat.Type.systemBars())
-        linearLayout.setPadding(0, systemBars.top, 0, 0)
-        return WindowInsetsCompat.CONSUMED.toWindowInsets() ?: insets
+        val bars = WindowInsetsCompat.toWindowInsetsCompat(insets, this)
+            .getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+        linearLayout.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+        return insets
     }
 }
 

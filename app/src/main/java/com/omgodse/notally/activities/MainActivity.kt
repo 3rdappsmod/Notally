@@ -15,9 +15,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +31,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.transition.TransitionManager
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.MenuDialog
@@ -76,15 +79,50 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.enableEdgeToEdge(window)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onBackPressedDispatcher.addCallback(this, backCallback)
 
         setSupportActionBar(binding.Toolbar)
+        setupInsets()
+        setupSystemBars()
         setupFAB()
         setupActionMode()
         setupNavigation()
         setupSearch()
+    }
+
+    private fun setupInsets() {
+        val content = binding.RelativeLayout
+        val contentLeft = content.paddingLeft
+        val contentTop = content.paddingTop
+        val contentRight = content.paddingRight
+        val contentBottom = content.paddingBottom
+
+        val toolbarTop = binding.Toolbar.paddingTop
+        val actionModeTop = binding.ActionMode.paddingTop
+
+        ViewCompat.setOnApplyWindowInsetsListener(content) { view, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+
+            view.setPadding(
+                contentLeft + bars.left,
+                contentTop,
+                contentRight + bars.right,
+                contentBottom + bars.bottom,
+            )
+            binding.Toolbar.updatePadding(top = toolbarTop + bars.top)
+            binding.ActionMode.updatePadding(top = actionModeTop + bars.top)
+
+            insets
+        }
+        ViewCompat.requestApplyInsets(content)
+    }
+
+    private fun setupSystemBars() {
+        val backgroundColor = MaterialColors.getColor(binding.Toolbar, com.google.android.material.R.attr.colorSurface)
+        WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = Operations.isColorLight(backgroundColor)
     }
 
     private fun setupFAB() {
