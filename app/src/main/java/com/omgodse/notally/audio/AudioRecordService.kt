@@ -29,12 +29,12 @@ class AudioRecordService : Service() {
 
     override fun onCreate() {
         manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        builder = Notification.Builder(this)
 
         val channelId = "com.omgodse.audio"
         val channel = NotificationChannel(channelId, "Audio Recordings", NotificationManager.IMPORTANCE_HIGH)
         manager.createNotificationChannel(channel)
-        builder.setChannelId(channelId)
+
+        builder = Notification.Builder(this, channelId)
 
         builder.setSmallIcon(R.drawable.record_audio)
         builder.setOnlyAlertOnce(true)

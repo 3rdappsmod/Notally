@@ -64,11 +64,11 @@ class BaseNoteVH(
         binding.Note.maxLines = maxLines
 
         binding.root.setOnClickListener {
-            listener.onClick(adapterPosition)
+            listener.onClick(bindingAdapterPosition)
         }
 
         binding.root.setOnLongClickListener {
-            listener.onLongClick(adapterPosition)
+            listener.onLongClick(bindingAdapterPosition)
             return@setOnLongClickListener true
         }
     }

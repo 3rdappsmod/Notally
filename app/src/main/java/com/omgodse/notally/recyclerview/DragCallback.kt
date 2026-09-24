@@ -20,8 +20,8 @@ class DragCallback(private val elevation: Float, private val adapter: MakeListAd
     }
 
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
-        val from = viewHolder.adapterPosition
-        val to = target.adapterPosition
+        val from = viewHolder.bindingAdapterPosition
+        val to = target.bindingAdapterPosition
         Collections.swap(adapter.list, from, to)
         adapter.notifyItemMoved(from, to)
         return true

@@ -10,7 +10,7 @@ class ColorVH(private val binding: RecyclerColorBinding, listener: ItemListener)
 
     init {
         binding.root.setOnClickListener {
-            listener.onClick(adapterPosition)
+            listener.onClick(bindingAdapterPosition)
         }
     }
 
