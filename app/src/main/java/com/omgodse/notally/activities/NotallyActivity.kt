@@ -238,7 +238,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 initialLeft + bars.left,
                 initialTop + bars.top,
                 initialRight + bars.right,
-                initialBottom + bars.bottom,
+                initialBottom + maxOf(bars.bottom, insets.getInsets(WindowInsetsCompat.Type.ime()).bottom),
             )
             insets
         }
