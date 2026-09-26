@@ -81,58 +81,70 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     private val addImagesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val uri = result.data?.data
-            val clipData = result.data?.clipData
-            if (uri != null) {
-                val uris = arrayOf(uri)
-                model.addImages(uris)
-            } else if (clipData != null) {
-                val uris = Array(clipData.itemCount) { index -> clipData.getItemAt(index).uri }
-                model.addImages(uris)
+        afterInitialization {
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri = result.data?.data
+                val clipData = result.data?.clipData
+                if (uri != null) {
+                    val uris = arrayOf(uri)
+                    model.addImages(uris)
+                } else if (clipData != null) {
+                    val uris = Array(clipData.itemCount) { index -> clipData.getItemAt(index).uri }
+                    model.addImages(uris)
+                }
             }
         }
     }
 
     private val viewImagesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val list = result.data?.let { IntentCompat.getParcelableArrayListExtra(it, ViewImage.DELETED_IMAGES, Image::class.java) }
-            if (!list.isNullOrEmpty()) {
-                model.deleteImages(list)
+        afterInitialization {
+            if (result.resultCode == Activity.RESULT_OK) {
+                val list = result.data?.let { IntentCompat.getParcelableArrayListExtra(it, ViewImage.DELETED_IMAGES, Image::class.java) }
+                if (!list.isNullOrEmpty()) {
+                    model.deleteImages(list)
+                }
             }
         }
     }
 
     private val selectLabelsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val list = result.data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
-            if (list != null && list != model.labels.value) {
-                model.labels.value = list
+        afterInitialization {
+            if (result.resultCode == Activity.RESULT_OK) {
+                val list = result.data?.getStringArrayListExtra(SelectLabels.SELECTED_LABELS)
+                if (list != null && list != model.labels.value) {
+                    model.labels.value = list
+                }
             }
         }
     }
 
     private val recordAudioLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            model.addAudio()
+        afterInitialization {
+            if (result.resultCode == Activity.RESULT_OK) {
+                model.addAudio()
+            }
         }
     }
 
     private val playAudioLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val audio = result.data?.let { IntentCompat.getParcelableExtra(it, PlayAudio.AUDIO, Audio::class.java) }
-            if (audio != null) {
-                model.deleteAudio(audio)
+        afterInitialization {
+            if (result.resultCode == Activity.RESULT_OK) {
+                val audio = result.data?.let { IntentCompat.getParcelableExtra(it, PlayAudio.AUDIO, Audio::class.java) }
+                if (audio != null) {
+                    model.deleteAudio(audio)
+                }
             }
         }
     }
 
     private val alarmPermissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        // Bug in Samsung: Even if permission was granted result code is RESULT_CANCELED
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (manager.canScheduleExactAlarms()) {
-                displayReminderDialog()
+        afterInitialization {
+            // Bug in Samsung: Even if permission was granted result code is RESULT_CANCELED
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                if (manager.canScheduleExactAlarms()) {
+                    displayReminderDialog()
+                }
             }
         }
     }
@@ -140,6 +152,14 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private var initialization: Job? = null
     private var finishingNote = false
     private var pendingEditorState: Bundle? = null
+
+    // Activity results may arrive while a recreated editor is still loading from Room.
+    private fun afterInitialization(action: () -> Unit) {
+        lifecycleScope.launch {
+            initialization?.join()
+            action()
+        }
+    }
 
     override fun finish() {
         if (finishingNote) return
@@ -238,7 +258,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 initialLeft + bars.left,
                 initialTop + bars.top,
                 initialRight + bars.right,
-                initialBottom + bars.bottom,
+                initialBottom + maxOf(bars.bottom, insets.getInsets(WindowInsetsCompat.Type.ime()).bottom),
             )
             insets
         }

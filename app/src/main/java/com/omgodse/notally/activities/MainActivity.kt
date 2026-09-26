@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                 contentLeft + bars.left,
                 contentTop,
                 contentRight + bars.right,
-                contentBottom + bars.bottom,
+                contentBottom + maxOf(bars.bottom, insets.getInsets(WindowInsetsCompat.Type.ime()).bottom),
             )
             binding.Toolbar.updatePadding(top = toolbarTop + bars.top)
             binding.ActionMode.updatePadding(top = actionModeTop + bars.top)

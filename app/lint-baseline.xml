@@ -1,1539 +1,237 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 9.4.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.4.1)" variant="all" version="9.4.1">
-
-    <issue
-        id="ApplySharedPref"
-        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
-        errorLine1="        preferences.edit().clear().commit()"
-        errorLine2="                                   ~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/legacy/Migrations.kt"
-            line="16"
-            column="36"/>
-    </issue>
-
-    <issue
-        id="DuplicateIncludedIds"
-        message="Duplicate id @+id/Title, defined or included multiple times in layout/fragment_settings.xml: [layout/fragment_settings.xml => layout/preference.xml defines @+id/Title, layout/fragment_settings.xml => layout/preference_seekbar.xml defines @+id/Title]"
-        errorLine1="        &lt;include"
-        errorLine2="        ^">
-        <location
-            file="src/main/res/layout/fragment_settings.xml"
-            line="52"
-            column="9"
-            message="Duplicate id @+id/Title, defined or included multiple times in layout/fragment_settings.xml: [layout/fragment_settings.xml => layout/preference.xml defines @+id/Title, layout/fragment_settings.xml => layout/preference_seekbar.xml defines @+id/Title]"/>
-        <location
-            file="src/main/res/layout/preference.xml"
-            line="12"
-            column="9"
-            message="Defined here, included via layout/fragment_settings.xml => layout/preference.xml defines @+id/Title"/>
-        <location
-            file="src/main/res/layout/preference_seekbar.xml"
-            line="13"
-            column="9"
-            message="Defined here, included via layout/fragment_settings.xml => layout/preference_seekbar.xml defines @+id/Title"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 31 (current min is 26): `android.widget.RemoteViews#EXTRA_CHECKED`"
-        errorLine1="                val checked = intent.getBooleanExtra(RemoteViews.EXTRA_CHECKED, false)"
-        errorLine2="                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/widget/WidgetProvider.kt"
-            line="42"
-            column="54"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `previewLayout` is only used in API level 31 and higher (current min is 26)"
-        errorLine1="    android:previewLayout=&quot;@layout/widget_preview&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/xml/widget.xml"
-            line="8"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `targetCellWidth` is only used in API level 31 and higher (current min is 26)"
-        errorLine1="    android:targetCellWidth=&quot;4&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/xml/widget.xml"
-            line="10"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `targetCellHeight` is only used in API level 31 and higher (current min is 26)"
-        errorLine1="    android:targetCellHeight=&quot;2&quot; />"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/xml/widget.xml"
-            line="11"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.10.1 is available: 2.10.2"
-        errorLine1="navigation = &quot;2.10.1&quot;"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="$HOME/바탕화면/claude/Notally/gradle/libs.versions.toml"
-            line="9"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.10.1 is available: 2.10.2"
-        errorLine1="navigation = &quot;2.10.1&quot;"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="$HOME/바탕화면/claude/Notally/gradle/libs.versions.toml"
-            line="9"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.work:work-runtime than 2.9.0 is available: 2.12.0"
-        errorLine1="workRuntime = &quot;2.9.0&quot;"
-        errorLine2="              ~~~~~~~">
-        <location
-            file="$HOME/바탕화면/claude/Notally/gradle/libs.versions.toml"
-            line="10"
-            column="15"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="Overriding `@integer/config_navAnimTime` which is marked as private in androidx.navigation:navigation-ui:2.10.1. If deliberate, use tools:override=&quot;true&quot;, otherwise pick a different name."
-        errorLine1="    &lt;integer name=&quot;config_navAnimTime&quot;>300&lt;/integer>"
-        errorLine2="                   ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dimens.xml"
-            line="3"
-            column="20"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
-        errorLine1="    &lt;plurals name=&quot;cant_add_images&quot;>"
-        errorLine2="    ^">
-        <location
-            file="src/main/res/values-fr/strings.xml"
-            line="145"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;filter&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;filter&quot;>Filter&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="13"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;add_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;add_images&quot;>Add images&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="19"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;record_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;record_audio&quot;>Record audio&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="21"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;set_reminder&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;set_reminder&quot;>Set reminder&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="22"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;change_color&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;change_color&quot;>Change color&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="23"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;make_a_copy&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;make_a_copy&quot;>Make a copy&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="24"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;previous&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;cs&quot; (Czech), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
-        errorLine1="    &lt;string name=&quot;previous&quot;>Previous&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="28"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;next&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;cs&quot; (Czech), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
-        errorLine1="    &lt;string name=&quot;next&quot;>Next&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="29"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;others&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;others&quot;>Others&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="35"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;continue_&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;continue_&quot;>Continue&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="44"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;open_link&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;es&quot; (Spanish), &quot;tl&quot; (Tagalog)"
-        errorLine1="    &lt;string name=&quot;open_link&quot;>Open link&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="45"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;view_file&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;es&quot; (Spanish), &quot;tl&quot; (Tagalog)"
-        errorLine1="    &lt;string name=&quot;view_file&quot;>View file&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="50"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;delete_selected_notes&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;delete_selected_notes&quot;>Delete selected notes?&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="57"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;audio_recordings&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;audio_recordings&quot;>Audio Recordings&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="67"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;select_labels&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;select_labels&quot;>Select labels&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="81"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;install_an_email&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;install_an_email&quot;>Install an email app to send feedback&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="86"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;install_a_browser&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;install_a_browser&quot;>Install a browser to open this link&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="87"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;cant_find_note&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;cant_find_note&quot;>Can’t find note. It may have been deleted&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="88"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;date_format&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;date_format&quot;>Date format&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="102"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;none&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;none&quot;>None&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="103"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;text_size&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;text_size&quot;>Text size&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="105"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;small&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;small&quot;>Small&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="106"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;medium&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;medium&quot;>Medium&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="107"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;large&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;large&quot;>Large&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="108"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;max_lines_to_display_title&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;max_lines_to_display_title&quot;>Max lines to display in title&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="113"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;auto_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;auto_backup&quot;>Auto backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="117"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;tap_to_set_up&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;tap_to_set_up&quot;>Tap to set up&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="118"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;notes_will_be&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;notes_will_be&quot;>Notes will be backed up to your phone’s internal storage everyday.\n\nThis may not work if you have power saving mode enabled&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="119"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;choose_folder&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;choose_folder&quot;>Choose folder&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="120"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;disable_auto_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;disable_auto_backup&quot;>Disable auto backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="121"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;choose_another_folder&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;choose_another_folder&quot;>Choose another folder&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="122"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;cant_find_folder&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;cant_find_folder&quot;>Can’t find folder. It may have been moved or deleted&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="123"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;invalid_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;el&quot; (Greek), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;invalid_backup&quot;>Invalid backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="124"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;imported_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;el&quot; (Greek), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;imported_backup&quot;>Imported backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="125"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;exporting_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;exporting_backup&quot;>Exporting backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="126"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;importing_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;vi&quot; (Vietnamese), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;importing_backup&quot;>Importing backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="127"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;calculating&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;calculating&quot;>Calculating…&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="128"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;export_backup&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog)"
-        errorLine1="    &lt;string name=&quot;export_backup&quot;>Export backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="130"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;import_backup&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog)"
-        errorLine1="    &lt;string name=&quot;import_backup&quot;>Import backup&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="131"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;send_feedback&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;send_feedback&quot;>Send feedback&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="136"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;single_note_or_list&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;single_note_or_list&quot;>Single note or list&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="141"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;select_note&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;select_note&quot;>Select note&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="142"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;adding_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;adding_images&quot;>Adding images&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="146"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;deleting_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;deleting_images&quot;>Deleting images&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="147"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;invalid_image&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;invalid_image&quot;>Invalid image&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="148"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;error_while_renaming_image&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;error_while_renaming_image&quot;>Error while renaming image&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="149"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;image_format_not_supported&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
-        errorLine1="    &lt;string name=&quot;image_format_not_supported&quot;>Image format not supported&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="150"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;delete_image_forever&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;delete_image_forever&quot;>Delete image forever?&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="151"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;cant_load_image&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;cant_load_image&quot;>Can’t load image. It may have been moved or deleted&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="152"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;unknown_name&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;unknown_name&quot;>Unknown name&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="153"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;unknown_error&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;unknown_error&quot;>Unknown error&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="154"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;insert_an_sd_card_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;insert_an_sd_card_images&quot;>Insert an SD card to add images&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="155"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;cant_add_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;plurals name=&quot;cant_add_images&quot;>"
-        errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="157"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;play&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;play&quot;>Play&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="163"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;stop&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;stop&quot;>Stop&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="164"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;start&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;start&quot;>Start&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="165"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;pause&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;pause&quot;>Pause&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="166"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;resume&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;resume&quot;>Resume&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="167"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;paused&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;paused&quot;>Paused&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="168"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;recording&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;recording&quot;>Recording…&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="169"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;ready_to_record&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;ready_to_record&quot;>Ready to record&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="170"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;discard&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;discard&quot;>Discard&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="171"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;save_recording&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;save_recording&quot;>Save recording?&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="172"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;delete_audio_recording_forever&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;delete_audio_recording_forever&quot;>Delete audio recording forever?&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="173"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;tap_for_more_options&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;tap_for_more_options&quot;>Tap for more options&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="174"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;to_record_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;to_record_audio&quot;>To record audio, allow Notally access to your microphone. Tap Settings > Permissions and turn Microphone on&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="175"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;please_grant_notally_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;please_grant_notally_audio&quot;>Please grant Notally the permission to record audio. Recordings never leave your device&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="176"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;insert_an_sd_card_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;insert_an_sd_card_audio&quot;>Insert an SD card to record audio&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="177"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;something_went_wrong_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;something_went_wrong_audio&quot;>Something went wrong. The audio recording may have been moved or deleted.\n\nError : (%1$d, %2$d)&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="178"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;time&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;time&quot;>Time&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="181"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;select_frequency&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;select_frequency&quot;>Select frequency&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="182"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;does_not_repeat&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;does_not_repeat&quot;>Does not repeat&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="183"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;daily&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;daily&quot;>Daily&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="184"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;monthly&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;monthly&quot;>Monthly&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="185"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;repeats_daily&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;repeats_daily&quot;>%1$s, Repeats daily&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="186"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;repeats_monthly&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;repeats_monthly&quot;>%1$s, Repeats monthly&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="187"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;please_grant_notally_notification&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;please_grant_notally_notification&quot;>Please grant Notally the permission to send notifications&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="188"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;please_grant_notally_alarm&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)"
-        errorLine1="    &lt;string name=&quot;please_grant_notally_alarm&quot;>Please grant Notally the permission to set alarms&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="189"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="Typos"
-        message="&quot;yada&quot; is a common misspelling; did you mean &quot;ya da&quot;?"
-        errorLine1="    &lt;string name=&quot;cant_find_folder&quot;>Klasör bulunamıyor. Taşınmış yada silinmiş olabilir&lt;/string>"
-        errorLine2="                                                                 ~~~~">
-        <location
-            file="src/main/res/values-tr/strings.xml"
-            line="118"
-            column="66"/>
-    </issue>
-
-    <issue
-        id="Typos"
-        message="&quot;yada&quot; is a common misspelling; did you mean &quot;ya da&quot;?"
-        errorLine1="    &lt;string name=&quot;single_note_or_list&quot;>Tek not yada liste&lt;/string>"
-        errorLine2="                                               ~~~~">
-        <location
-            file="src/main/res/values-tr/strings.xml"
-            line="134"
-            column="48"/>
-    </issue>
-
-    <issue
-        id="Typos"
-        message="&quot;yada&quot; is a common misspelling; did you mean &quot;ya da&quot;?"
-        errorLine1="    &lt;string name=&quot;cant_load_image&quot;>Resim yüklenemiyor. Taşınmış yada silinmiş olabilir&lt;/string>"
-        errorLine2="                                                                ~~~~">
-        <location
-            file="src/main/res/values-tr/strings.xml"
-            line="145"
-            column="65"/>
-    </issue>
-
-    <issue
-        id="Typos"
-        message="&quot;yada&quot; is a common misspelling; did you mean &quot;ya da&quot;?"
-        errorLine1="    &lt;string name=&quot;something_went_wrong_audio&quot;>Bir şeyler ters gitti. Ses kaydı taşınmış yada silinmiş olabilir.\n\nHata : (%1$d, %2$d)&lt;/string>"
-        errorLine2="                                                                                        ~~~~">
-        <location
-            file="src/main/res/values-tr/strings.xml"
-            line="171"
-            column="89"/>
-    </issue>
-
-    <issue
-        id="Untranslatable"
-        message="The resource string &quot;count&quot; is marked as translatable=&quot;false&quot;, but is translated to &quot;tr&quot; (Turkish) here"
-        errorLine1="    &lt;string name=&quot;count&quot; translatable=&quot;false&quot;>%1$d / %2$d&lt;/string>"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-tr/strings.xml"
-            line="138"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;vi&quot; (Vietnamese) the following quantities are not relevant: `one`"
-        errorLine1="    &lt;plurals name=&quot;cant_add_images&quot;>"
-        errorLine2="    ^">
-        <location
-            file="src/main/res/values-vi/strings.xml"
-            line="147"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;ko&quot; (Korean) the following quantities are not relevant: `one`"
-        errorLine1="    &lt;plurals name=&quot;cant_add_images&quot;>"
-        errorLine2="    ^">
-        <location
-            file="src/main/res/values-ko/strings.xml"
-            line="153"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `drawable`.">
-        <location
-            file="src/main/res/drawable-v26"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `mipmap-anydpi`.">
-        <location
-            file="src/main/res/mipmap-anydpi-v26"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="This folder configuration (`v23`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `values`.">
-        <location
-            file="src/main/res/values-v23"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
-        errorLine1="    android:background=&quot;?attr/selectableItemBackground&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/preference.xml"
-            line="5"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
-        errorLine1="    android:background=&quot;?attr/selectableItemBackground&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/recycler_audio.xml"
-            line="5"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:colorBackground` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
-        errorLine1="    android:background=&quot;?android:colorBackground&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget.xml"
-            line="5"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `#FFFFFF` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
-        errorLine1="    android:background=&quot;#FFFFFF&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="5"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.integer.config_navAnimTime` appears to be unused"
-        errorLine1="    &lt;integer name=&quot;config_navAnimTime&quot;>300&lt;/integer>"
-        errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dimens.xml"
-            line="3"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.notification_reminder` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/notification_reminder.xml"
-            line="1"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.filter` appears to be unused"
-        errorLine1="    &lt;string name=&quot;filter&quot;>Filter&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="13"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.saved_to_notally` appears to be unused"
-        errorLine1="    &lt;string name=&quot;saved_to_notally&quot;>Saved to Notally&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="78"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MonochromeLauncherIcon"
-        message="The application adaptive icon is missing a monochrome tag"
-        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location
-            file="src/main/res/mipmap-anydpi-v26/notally.xml"
-            line="2"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="MonochromeLauncherIcon"
-        message="The application adaptive roundIcon is missing a monochrome tag"
-        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location
-            file="src/main/res/mipmap-anydpi-v26/notally_round.xml"
-            line="2"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_main.xml"
-            line="20"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_notally.xml"
-            line="28"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_notally.xml"
-            line="66"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="        &lt;EditText"
-        errorLine2="         ~~~~~~~~">
-        <location
-            file="src/main/res/layout/recycler_list_item.xml"
-            line="39"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="            val uri = Uri.parse(backupPath)"
-        errorLine2="                      ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/AutoBackupWorker.kt"
-            line="28"
-            column="23"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `SharedPreferences.edit` instead?"
-        errorLine1="        preferences.edit().clear().commit()"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/legacy/Migrations.kt"
-            line="16"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="                        intent.data = Uri.parse(&quot;package:$packageName&quot;)"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/activities/NotallyActivity.kt"
-            line="297"
-            column="39"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="                        intent.data = Uri.parse(&quot;package:$packageName&quot;)"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/activities/NotallyActivity.kt"
-            line="297"
-            column="39"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="                intent.data = Uri.parse(&quot;package:${packageName}&quot;)"
-        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/activities/NotallyActivity.kt"
-            line="336"
-            column="31"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="                intent.data = Uri.parse(&quot;package:${packageName}&quot;)"
-        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/activities/NotallyActivity.kt"
-            line="336"
-            column="31"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension property `View.isVisible` instead?"
-        errorLine1="                if (binding.Search.visibility == View.VISIBLE) {"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/activities/NotallyActivity.kt"
-            line="614"
-            column="21"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="        intent.selector = Intent(Intent.ACTION_SENDTO, Uri.parse(&quot;mailto:&quot;))"
-        errorLine2="                                                       ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/fragments/Settings.kt"
-            line="153"
-            column="56"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="        intent.selector = Intent(Intent.ACTION_SENDTO, Uri.parse(&quot;mailto:&quot;))"
-        errorLine2="                                                       ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/fragments/Settings.kt"
-            line="153"
-            column="56"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="            val uri = Uri.parse(value)"
-        errorLine2="                      ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/fragments/Settings.kt"
-            line="234"
-            column="23"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="        val uri = Uri.parse(link)"
-        errorLine2="                  ~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/fragments/Settings.kt"
-            line="264"
-            column="19"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
-        message="Use the KTX extension function `String.toUri` instead?"
-        errorLine1="                                val uri = Uri.parse(link)"
-        errorLine2="                                          ~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/activities/TakeNote.kt"
-            line="104"
-            column="43"/>
-    </issue>
-
-    <issue
-        id="ClickableViewAccessibility"
-        message="Custom view ``ImageButton`` has `setOnTouchListener` called on it but does not override `performClick`"
-        errorLine1="        binding.DragHandle.setOnTouchListener { _, event ->"
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/omgodse/notally/recyclerview/viewholder/MakeListVH.kt"
-            line="42"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="ClickableViewAccessibility"
-        message="`onTouch` lambda should call `View#performClick` when a click is detected"
-        errorLine1="        binding.DragHandle.setOnTouchListener { _, event ->"
-        errorLine2="                                              ^">
-        <location
-            file="src/main/java/com/omgodse/notally/recyclerview/viewholder/MakeListVH.kt"
-            line="42"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="    &lt;ImageView"
-        errorLine2="     ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_notes.xml"
-            line="7"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="    &lt;ImageView"
-        errorLine2="     ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/recycler_preview_image.xml"
-            line="7"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="    &lt;EditText"
-        errorLine2="     ~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_input.xml"
-            line="7"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="SetTextI18n"
-        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
-        errorLine1="                binding.ItemsRemaining.text = (items.size - maxItems).toString()"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/omgodse/notally/recyclerview/viewholder/BaseNoteVH.kt"
-            line="134"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Taylor’s albums&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Taylor’s albums&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="14"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Sun 4 June 2023&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Sun 4 June 2023&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="21"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;1989&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;1989&quot; />"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="30"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Reputation&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Reputation&quot; />"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="37"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Lover&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Lover&quot; />"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="44"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Folklore&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Folklore&quot; />"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="51"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Evermore&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Evermore&quot; />"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="58"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Midnights&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Midnights&quot; />"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/widget_preview.xml"
-            line="64"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="RtlEnabled"
-        message="The project references RTL attributes, but does not explicitly enable or disable RTL support with `android:supportsRtl` in the manifest">
-        <location
-            file="src/main/AndroidManifest.xml"/>
-    </issue>
-
+<?xml version='1.0' encoding='UTF-8'?>
+<issues format="6" by="lint 9.4.0" type="baseline" client="gradle" dependencies="false" name="AGP" variant="all" version="9.4.0">
+    <issue id="MissingTranslation" message="&quot;filter&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;filter&quot;&gt;Filter&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="13" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;add_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;add_images&quot;&gt;Add images&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="19" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;record_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;record_audio&quot;&gt;Record audio&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="21" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;set_reminder&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;set_reminder&quot;&gt;Set reminder&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="22" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;change_color&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;change_color&quot;&gt;Change color&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="23" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;make_a_copy&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;make_a_copy&quot;&gt;Make a copy&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="24" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;previous&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;cs&quot; (Czech), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)" errorLine1="    &lt;string name=&quot;previous&quot;&gt;Previous&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="28" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;next&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;cs&quot; (Czech), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)" errorLine1="    &lt;string name=&quot;next&quot;&gt;Next&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="29" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;others&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;others&quot;&gt;Others&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="35" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;continue_&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;continue_&quot;&gt;Continue&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="44" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;open_link&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;es&quot; (Spanish), &quot;tl&quot; (Tagalog)" errorLine1="    &lt;string name=&quot;open_link&quot;&gt;Open link&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="45" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;view_file&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;es&quot; (Spanish), &quot;tl&quot; (Tagalog)" errorLine1="    &lt;string name=&quot;view_file&quot;&gt;View file&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="50" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;delete_selected_notes&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;delete_selected_notes&quot;&gt;Delete selected notes?&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="57" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;audio_recordings&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;audio_recordings&quot;&gt;Audio Recordings&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="67" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;select_labels&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;select_labels&quot;&gt;Select labels&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="81" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;install_an_email&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;install_an_email&quot;&gt;Install an email app to send feedback&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="86" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;install_a_browser&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;install_a_browser&quot;&gt;Install a browser to open this link&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="87" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;cant_find_note&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;cant_find_note&quot;&gt;Can’t find note. It may have been deleted&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="88" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;date_format&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;date_format&quot;&gt;Date format&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="102" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;none&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;none&quot;&gt;None&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="103" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;text_size&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;text_size&quot;&gt;Text size&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="105" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;small&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;small&quot;&gt;Small&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="106" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;medium&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;medium&quot;&gt;Medium&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="107" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;large&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;large&quot;&gt;Large&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="108" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;max_lines_to_display_title&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;max_lines_to_display_title&quot;&gt;Max lines to display in title&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="113" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;auto_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;auto_backup&quot;&gt;Auto backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="117" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;tap_to_set_up&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;tap_to_set_up&quot;&gt;Tap to set up&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="118" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;notes_will_be&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;notes_will_be&quot;&gt;Notes will be backed up to your phone’s internal storage everyday.\n\nThis may not work if you have power saving mode enabled&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="119" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;choose_folder&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;choose_folder&quot;&gt;Choose folder&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="120" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;disable_auto_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;disable_auto_backup&quot;&gt;Disable auto backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="121" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;choose_another_folder&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;choose_another_folder&quot;&gt;Choose another folder&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="122" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;cant_find_folder&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;cant_find_folder&quot;&gt;Can’t find folder. It may have been moved or deleted&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="123" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;invalid_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;el&quot; (Greek), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;invalid_backup&quot;&gt;Invalid backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="124" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;imported_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;el&quot; (Greek), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;imported_backup&quot;&gt;Imported backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="125" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;exporting_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;exporting_backup&quot;&gt;Exporting backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="126" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;importing_backup&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;vi&quot; (Vietnamese), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;importing_backup&quot;&gt;Importing backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="127" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;calculating&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;calculating&quot;&gt;Calculating…&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="128" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;export_backup&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog)" errorLine1="    &lt;string name=&quot;export_backup&quot;&gt;Export backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="130" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;import_backup&quot; is not translated in &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;tl&quot; (Tagalog)" errorLine1="    &lt;string name=&quot;import_backup&quot;&gt;Import backup&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="131" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;send_feedback&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;send_feedback&quot;&gt;Send feedback&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="136" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;single_note_or_list&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;single_note_or_list&quot;&gt;Single note or list&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="141" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;select_note&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;select_note&quot;&gt;Select note&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="142" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;adding_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;adding_images&quot;&gt;Adding images&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="146" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;deleting_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;deleting_images&quot;&gt;Deleting images&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="147" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;invalid_image&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;invalid_image&quot;&gt;Invalid image&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="148" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;error_while_renaming_image&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;error_while_renaming_image&quot;&gt;Error while renaming image&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="149" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;image_format_not_supported&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)" errorLine1="    &lt;string name=&quot;image_format_not_supported&quot;&gt;Image format not supported&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="150" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;delete_image_forever&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;delete_image_forever&quot;&gt;Delete image forever?&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="151" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;cant_load_image&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;cant_load_image&quot;&gt;Can’t load image. It may have been moved or deleted&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="152" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;unknown_name&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;unknown_name&quot;&gt;Unknown name&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="153" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;unknown_error&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;unknown_error&quot;&gt;Unknown error&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="154" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;insert_an_sd_card_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;insert_an_sd_card_images&quot;&gt;Insert an SD card to add images&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="155" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;cant_add_images&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;plurals name=&quot;cant_add_images&quot;&gt;" errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="157" column="14" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;play&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;play&quot;&gt;Play&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="163" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;stop&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;stop&quot;&gt;Stop&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="164" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;start&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;start&quot;&gt;Start&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="165" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;pause&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;pause&quot;&gt;Pause&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="166" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;resume&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;resume&quot;&gt;Resume&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="167" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;paused&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;paused&quot;&gt;Paused&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="168" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;recording&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;recording&quot;&gt;Recording…&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="169" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;ready_to_record&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;ready_to_record&quot;&gt;Ready to record&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="170" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;discard&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;discard&quot;&gt;Discard&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="171" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;save_recording&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;save_recording&quot;&gt;Save recording?&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="172" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;delete_audio_recording_forever&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;delete_audio_recording_forever&quot;&gt;Delete audio recording forever?&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="173" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;tap_for_more_options&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;tap_for_more_options&quot;&gt;Tap for more options&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="174" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;to_record_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;to_record_audio&quot;&gt;To record audio, allow Notally access to your microphone. Tap Settings &gt; Permissions and turn Microphone on&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="175" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;please_grant_notally_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;please_grant_notally_audio&quot;&gt;Please grant Notally the permission to record audio. Recordings never leave your device&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="176" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;insert_an_sd_card_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;insert_an_sd_card_audio&quot;&gt;Insert an SD card to record audio&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="177" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;something_went_wrong_audio&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;something_went_wrong_audio&quot;&gt;Something went wrong. The audio recording may have been moved or deleted.\n\nError : (%1$d, %2$d)&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="178" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;time&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;time&quot;&gt;Time&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="181" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;select_frequency&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;select_frequency&quot;&gt;Select frequency&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="182" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;does_not_repeat&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;does_not_repeat&quot;&gt;Does not repeat&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="183" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;daily&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;daily&quot;&gt;Daily&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="184" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;monthly&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;monthly&quot;&gt;Monthly&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="185" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;repeats_daily&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;repeats_daily&quot;&gt;%1$s, Repeats daily&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="186" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;repeats_monthly&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;repeats_monthly&quot;&gt;%1$s, Repeats monthly&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="187" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;please_grant_notally_notification&quot; is not translated in &quot;ru&quot; (Russian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;please_grant_notally_notification&quot;&gt;Please grant Notally the permission to send notifications&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="188" column="13" />
+    </issue>
+    <issue id="MissingTranslation" message="&quot;please_grant_notally_alarm&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;ca&quot; (Catalan), &quot;sv&quot; (Swedish), &quot;in&quot; (Indonesian), &quot;el&quot; (Greek), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian)" errorLine1="    &lt;string name=&quot;please_grant_notally_alarm&quot;&gt;Please grant Notally the permission to set alarms&lt;/string&gt;" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values/strings.xml" line="189" column="13" />
+    </issue>
 </issues>
