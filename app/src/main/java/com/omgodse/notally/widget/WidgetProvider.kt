@@ -6,7 +6,10 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Parcel
 import android.widget.RemoteViews
+import androidx.annotation.RequiresApi
 import com.omgodse.notally.R
 import com.omgodse.notally.activities.ConfigureWidget
 import com.omgodse.notally.activities.MakeList
@@ -15,15 +18,17 @@ import com.omgodse.notally.miscellaneous.Constants
 import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.preferences.Preferences
 import com.omgodse.notally.room.NotallyDatabase
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 class WidgetProvider : AppWidgetProvider() {
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
 
@@ -31,33 +36,46 @@ class WidgetProvider : AppWidgetProvider() {
             ACTION_NOTES_MODIFIED -> {
                 val noteIds = intent.getLongArrayExtra(EXTRA_MODIFIED_NOTES)
                 if (noteIds != null) {
-                    updateWidgets(context, noteIds)
+                    runAsync(context) { updateWidgets(context, noteIds) }
                 }
             }
             ACTION_OPEN_NOTE -> openActivity(context, intent, TakeNote::class.java)
             ACTION_OPEN_LIST -> openActivity(context, intent, MakeList::class.java)
             ACTION_CHECKED_CHANGED -> {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || !intent.hasExtra(RemoteViews.EXTRA_CHECKED)) return
                 val noteId = intent.getLongExtra(Constants.SelectedBaseNote, 0)
-                val position = intent.getIntExtra(EXTRA_POSITION, 0)
+                val position = intent.getIntExtra(EXTRA_POSITION, -1)
+                if (noteId <= 0 || position < 0) return
                 val checked = intent.getBooleanExtra(RemoteViews.EXTRA_CHECKED, false)
+                val expectedBody = intent.getStringExtra(EXTRA_ITEM_BODY)
 
-                val database = NotallyDatabase.getDatabase(context.applicationContext as Application)
-                val pendingResult = goAsync()
-                GlobalScope.launch {
-                    withContext(Dispatchers.IO) {
-                        try {
-                            database.getBaseNoteDao().updateChecked(noteId, position, checked)
-                        } finally {
-                            updateWidgets(context, longArrayOf(noteId))
-                            pendingResult.finish()
-                        }
-                    }
+                runAsync(context) {
+                    val database = NotallyDatabase.getDatabase(context.applicationContext as Application)
+                    database.getBaseNoteDao().updateChecked(noteId, position, checked, expectedBody)
+                    // Refresh even when the click referred to a removed or changed row.
+                    updateWidgets(context, longArrayOf(noteId))
                 }
             }
         }
     }
 
-    private fun updateWidgets(context: Context, noteIds: LongArray) {
+    private fun runAsync(context: Context, action: suspend () -> Unit) {
+        val pendingResult = goAsync()
+        val app = context.applicationContext as Application
+        receiverScope.launch {
+            try {
+                action()
+            } catch (exception: CancellationException) {
+                throw exception
+            } catch (exception: Exception) {
+                Operations.log(app, exception)
+            } finally {
+                pendingResult.finish()
+            }
+        }
+    }
+
+    private suspend fun updateWidgets(context: Context, noteIds: LongArray) {
         val app = context.applicationContext as Application
         val preferences = Preferences.getInstance(app)
 
@@ -87,31 +105,72 @@ class WidgetProvider : AppWidgetProvider() {
         val app = context.applicationContext as Application
         val preferences = Preferences.getInstance(app)
 
-        appWidgetIds.forEach { id ->
-            val noteId = preferences.getWidgetData(id)
-            updateWidget(context, appWidgetManager, id, noteId)
+        runAsync(context) {
+            appWidgetIds.forEach { id ->
+                val noteId = preferences.getWidgetData(id)
+                updateWidget(context, appWidgetManager, id, noteId)
+            }
         }
     }
 
     companion object {
 
-        fun updateWidget(context: Context, manager: AppWidgetManager, id: Int, noteId: Long) {
-            // Widgets displaying the same note share the same factory since only the noteId is embedded
+        private val receiverScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        private val updateMutex = Mutex()
+
+        suspend fun updateWidget(context: Context, manager: AppWidgetManager, id: Int, noteId: Long) = withContext(Dispatchers.IO) {
+            // Serialize snapshot loading and publishing so an older snapshot cannot win a race.
+            updateMutex.withLock {
+                val app = context.applicationContext as Application
+                val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val note = NotallyDatabase.getDatabase(app).getBaseNoteDao().get(noteId)
+                    createCollection(WidgetViews(app, note))
+                } else null
+                val view = RemoteViews(context.packageName, R.layout.widget)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && collection != null) {
+                    view.setRemoteAdapter(R.id.ListView, collection)
+                } else {
+                    setLegacyAdapter(context, view, noteId)
+                }
+                view.setEmptyView(R.id.ListView, R.id.Empty)
+                view.setOnClickPendingIntent(R.id.Empty, getSelectNoteIntent(context, id))
+                view.setPendingIntentTemplate(R.id.ListView, getOpenNoteIntent(context, noteId))
+                manager.updateAppWidget(id, view)
+                if (collection == null) notifyLegacyAdapter(manager, id)
+            }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.S)
+        internal fun createCollection(views: WidgetViews): RemoteViews.RemoteCollectionItems? {
+            // Keep large notes on the lazy service path rather than exceed Binder's payload limit.
+            if (views.count > 200) return null
+            val builder = RemoteViews.RemoteCollectionItems.Builder()
+                .setHasStableIds(false)
+                .setViewTypeCount(3)
+            for (position in 0 until views.count) {
+                builder.addItem(position.toLong(), requireNotNull(views.getViewAt(position)))
+            }
+            val collection = builder.build()
+            val parcel = Parcel.obtain()
+            return try {
+                collection.writeToParcel(parcel, 0)
+                if (parcel.dataSize() <= 256 * 1024) collection else null
+            } finally {
+                parcel.recycle()
+            }
+        }
+
+        // Required on API 26–30 and for large collections; do not truncate user content.
+        @Suppress("DEPRECATION")
+        private fun setLegacyAdapter(context: Context, view: RemoteViews, noteId: Long) {
             val intent = Intent(context, WidgetService::class.java)
             intent.putExtra(Constants.SelectedBaseNote, noteId)
             Operations.embedIntentExtras(intent)
-
-            val view = RemoteViews(context.packageName, R.layout.widget)
             view.setRemoteAdapter(R.id.ListView, intent)
-            view.setEmptyView(R.id.ListView, R.id.Empty)
+        }
 
-            val selectNote = getSelectNoteIntent(context, id)
-            view.setOnClickPendingIntent(R.id.Empty, selectNote)
-
-            val openNote = getOpenNoteIntent(context, noteId)
-            view.setPendingIntentTemplate(R.id.ListView, openNote)
-
-            manager.updateAppWidget(id, view)
+        @Suppress("DEPRECATION")
+        private fun notifyLegacyAdapter(manager: AppWidgetManager, id: Int) {
             manager.notifyAppWidgetViewDataChanged(id, R.id.ListView)
         }
 
@@ -148,6 +207,7 @@ class WidgetProvider : AppWidgetProvider() {
         const val ACTION_OPEN_LIST = "com.omgodse.notally.ACTION_OPEN_LIST"
 
         const val ACTION_CHECKED_CHANGED = "com.omgodse.notally.ACTION_CHECKED_CHANGED"
+        const val EXTRA_ITEM_BODY = "com.omgodse.notally.EXTRA_ITEM_BODY"
         const val EXTRA_POSITION = "com.omgodse.notally.EXTRA_POSITION"
     }
 }

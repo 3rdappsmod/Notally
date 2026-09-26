@@ -3,6 +3,9 @@ package com.omgodse.notally.activities
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import com.omgodse.notally.miscellaneous.Operations
+import kotlinx.coroutines.CancellationException
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +31,7 @@ import java.util.Collections
 
 class ConfigureWidget : AppCompatActivity(), ItemListener {
 
+    private var configuring = false
     private lateinit var adapter: BaseNoteAdapter
     private val id by lazy {
         intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -78,18 +82,26 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
 
 
     override fun onClick(position: Int) {
-        if (position != -1) {
-            val preferences = Preferences.getInstance(application)
-            val noteId = (adapter.currentList[position] as BaseNote).id
-            preferences.updateWidget(id, noteId)
+        if (configuring || id == AppWidgetManager.INVALID_APPWIDGET_ID) return
+        val note = adapter.currentList.getOrNull(position) as? BaseNote ?: return
+        configuring = true
+        lifecycleScope.launch {
+            try {
+                val preferences = Preferences.getInstance(application)
+                preferences.updateWidget(id, note.id)
+                val manager = AppWidgetManager.getInstance(this@ConfigureWidget)
+                WidgetProvider.updateWidget(this@ConfigureWidget, manager, id, note.id)
 
-            val manager = AppWidgetManager.getInstance(this)
-            WidgetProvider.updateWidget(this, manager, id, noteId)
-
-            val success = Intent()
-            success.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
-            setResult(RESULT_OK, success)
-            finish()
+                val success = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+                setResult(RESULT_OK, success)
+                finish()
+            } catch (exception: CancellationException) {
+                throw exception
+            } catch (exception: Exception) {
+                Operations.log(application, exception)
+                Toast.makeText(this@ConfigureWidget, R.string.something_went_wrong, Toast.LENGTH_LONG).show()
+                configuring = false
+            }
         }
     }
 

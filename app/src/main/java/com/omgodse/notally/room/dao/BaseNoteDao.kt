@@ -6,6 +6,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.omgodse.notally.room.Audio
@@ -15,6 +16,7 @@ import com.omgodse.notally.room.Folder
 import com.omgodse.notally.room.IdReminder
 import com.omgodse.notally.room.Image
 import com.omgodse.notally.room.ListItem
+import com.omgodse.notally.room.Type
 import com.omgodse.notally.room.Reminder
 
 @Dao
@@ -115,25 +117,16 @@ interface BaseNoteDao {
     suspend fun updateReminder(id: Long, reminder: Reminder?)
 
 
-    /**
-     * Both id and position can be invalid.
-     *
-     * Example of id being invalid - User adds a widget,
-     * then goes to Settings and clears app data. Now the
-     * widget refers to a list which doesn't exist.
-     *
-     * Example of position being invalid - User adds a widget,
-     * goes to Settings, clears app data and then imports a backup.
-     * Even if the backup contains the same list and it is inserted
-     * with the same id, it may not be of the safe size.
-     *
-     * In this case, an exception will be thrown. It is the caller's
-     * responsibility to handle it.
-     */
-    suspend fun updateChecked(id: Long, position: Int, checked: Boolean) {
-        val items = requireNotNull(get(id)).items
-        items[position].checked = checked
-        updateItems(id, items)
+    /** Ignore stale widget clicks, and serialize the read/modify/write of the item list. */
+    @Transaction
+    suspend fun updateChecked(id: Long, position: Int, checked: Boolean, expectedBody: String? = null): Boolean {
+        val note = get(id) ?: return false
+        if (note.type != Type.LIST) return false
+        val item = note.items.getOrNull(position) ?: return false
+        if (expectedBody != null && item.body != expectedBody) return false
+        item.checked = checked
+        updateItems(id, note.items)
+        return true
     }
 
 
