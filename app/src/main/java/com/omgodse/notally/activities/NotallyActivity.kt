@@ -825,12 +825,13 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         val menu = binding.Toolbar.menu
 
-        val pin = menu.add(R.string.pin, R.drawable.pin) { model.togglePin() }
+        val pin = binding.PinNote
+        pin.setOnClickListener { model.togglePin() }
         model.pinned.observe(this, Observer { pinned ->
             bindPinned(pin, pinned)
         })
 
-        menu.add(R.string.share, R.drawable.share) { share() }
+        binding.ShareNote.setOnClickListener { share() }
         menu.add(R.string.labels, R.drawable.label) { label() }
         if (model.type == Type.NOTE) {
             menu.add(R.string.search, R.drawable.search) { model.searchEnabled.value = true }
@@ -854,6 +855,10 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 menu.add(R.string.delete, R.drawable.delete) { delete() }
                 menu.add(R.string.unarchive, R.drawable.unarchive) { restore() }
             }
+        }
+        // Keep the six editor actions in one fixed order; other commands stay in overflow.
+        for (index in 0 until menu.size()) {
+            menu.getItem(index).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
         }
     }
 
@@ -891,7 +896,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
 
-    private fun bindPinned(item: MenuItem, pinned: Boolean) {
+    private fun bindPinned(item: android.widget.ImageButton, pinned: Boolean) {
         val icon: Int
         val title: Int
         if (pinned) {
@@ -901,8 +906,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             icon = R.drawable.pin
             title = R.string.pin
         }
-        item.setTitle(title)
-        item.setIcon(icon)
+        item.contentDescription = getString(title)
+        item.tooltipText = getString(title)
+        item.setImageResource(icon)
     }
 
     companion object {

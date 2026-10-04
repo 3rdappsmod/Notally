@@ -15,7 +15,83 @@
             android:id="@+id/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="?attr/homeAsUpIndicator" />
+            app:contentInsetStartWithNavigation="0dp"
+            app:contentInsetEndWithActions="0dp"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+
+            <LinearLayout
+                android:id="@+id/EditorActions"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/JumpTop"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/jump_to_top"
+                    android:tooltipText="@string/jump_to_top"
+                    android:focusable="false"
+                    app:srcCompat="@drawable/vertical_align_top"
+                    app:tint="?attr/colorControlNormal" />
+                <ImageButton
+                    android:id="@+id/JumpBottom"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/jump_to_bottom"
+                    android:tooltipText="@string/jump_to_bottom"
+                    android:focusable="false"
+                    app:srcCompat="@drawable/vertical_align_bottom"
+                    app:tint="?attr/colorControlNormal" />
+                <ImageButton
+                    android:id="@+id/Redo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/redo"
+                    android:tooltipText="@string/redo"
+                    android:focusable="false"
+                    app:srcCompat="@drawable/redo"
+                    app:tint="?attr/colorControlNormal" />
+                <ImageButton
+                    android:id="@+id/Undo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/undo"
+                    android:tooltipText="@string/undo"
+                    android:focusable="false"
+                    app:srcCompat="@drawable/undo"
+                    app:tint="?attr/colorControlNormal" />
+                <ImageButton
+                    android:id="@+id/PinNote"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/pin"
+                    android:tooltipText="@string/pin"
+                    android:focusable="false"
+                    app:srcCompat="@drawable/pin"
+                    app:tint="?attr/colorControlNormal" />
+                <ImageButton
+                    android:id="@+id/ShareNote"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/share"
+                    android:tooltipText="@string/share"
+                    android:focusable="false"
+                    app:srcCompat="@drawable/share"
+                    app:tint="?attr/colorControlNormal" />
+            </LinearLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/Search"
@@ -46,7 +122,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/ToolbarContainer"
-        android:layout_above="@id/EditorActions"
         android:fillViewport="true"
         android:theme="@style/Colorless"
         android:visibility="gone">
@@ -177,51 +252,5 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <LinearLayout
-        android:id="@+id/EditorActions"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/JumpTop"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/jump_to_top"
-            android:focusable="false"
-            app:srcCompat="@drawable/vertical_align_top"
-            app:tint="?attr/colorControlNormal" />
-        <ImageButton
-            android:id="@+id/Undo"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/undo"
-            android:focusable="false"
-            app:srcCompat="@drawable/undo"
-            app:tint="?attr/colorControlNormal" />
-        <ImageButton
-            android:id="@+id/Redo"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/redo"
-            android:focusable="false"
-            app:srcCompat="@drawable/redo"
-            app:tint="?attr/colorControlNormal" />
-        <ImageButton
-            android:id="@+id/JumpBottom"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/jump_to_bottom"
-            android:focusable="false"
-            app:srcCompat="@drawable/vertical_align_bottom"
-            app:tint="?attr/colorControlNormal" />
-    </LinearLayout>
+
 </RelativeLayout>
