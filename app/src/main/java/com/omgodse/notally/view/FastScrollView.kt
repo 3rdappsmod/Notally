@@ -14,7 +14,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.color.MaterialColors
+import androidx.core.content.ContextCompat
 import com.omgodse.notally.R
 
 /** A dedicated right-hand drag lane, separate from editable text and list gestures. */
@@ -78,13 +78,9 @@ class FastScrollView(context: Context, attrs: AttributeSet? = null) : View(conte
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val color = MaterialColors.getColor(this, androidx.appcompat.R.attr.colorPrimary)
-        paint.color = color
-        paint.alpha = 45
+        paint.color = ContextCompat.getColor(context, R.color.fast_scroll_thumb)
         val center = width / 2f
-        canvas.drawRoundRect(center - density, 0f, center + density, height.toFloat(), density, density, paint)
-        paint.alpha = if (dragging) 255 else 190
-        val halfWidth = (if (dragging) 5 else 3) * density
+        val halfWidth = (if (dragging) 5 else 4) * density
         val top = fraction * travel
         canvas.drawRoundRect(center - halfWidth, top, center + halfWidth, top + thumbHeight, halfWidth, halfWidth, paint)
     }
