@@ -12,6 +12,9 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.EditText
+import androidx.core.view.doOnNextLayout
+import com.omgodse.notally.view.CursorVisibility
 import android.provider.Settings
 import android.text.Editable
 import android.util.TypedValue
@@ -252,7 +255,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         val initialRight = root.paddingRight
         val initialBottom = root.paddingBottom
 
+        var previousImeBottom = 0
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
+            val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
             view.setPadding(
                 initialLeft + bars.left,
@@ -260,6 +265,12 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 initialRight + bars.right,
                 initialBottom + maxOf(bars.bottom, insets.getInsets(WindowInsetsCompat.Type.ime()).bottom),
             )
+            if (imeBottom > previousImeBottom) {
+                root.doOnNextLayout {
+                    root.post { (currentFocus as? EditText)?.let(CursorVisibility::reveal) }
+                }
+            }
+            previousImeBottom = imeBottom
             insets
         }
         ViewCompat.requestApplyInsets(root)
