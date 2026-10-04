@@ -252,7 +252,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     }
 
     protected fun captureEditorState(): EditorState {
-        val editor = currentFocus as? EditText
+        val editor = binding.root.findFocus() as? EditText
         val field = when (editor) {
             binding.EnterTitle -> -2
             binding.EnterBody -> -1
@@ -261,6 +261,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         return model.editorState(editor?.selectionStart ?: 0, editor?.selectionEnd ?: 0, field)
     }
 
+    private val historyWatchers = ArrayList<Pair<EditText, TextWatcher>>()
     private var editorHistoryReady = false
 
     protected fun recordEdit(action: () -> Unit) {
@@ -280,7 +281,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun setupEditorHistory() {
         editorHistoryReady = true
         fun watch(editor: EditText) {
-            editor.addTextChangedListener(object : TextWatcher {
+            val watcher = object : TextWatcher {
                 private var before: EditorState? = null
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                     before = if (model.restoringEditor) null else captureEditorState()
@@ -290,7 +291,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                     before?.let { model.recordEditorChange(it, captureEditorState()) }
                     before = null
                 }
-            })
+            }
+            editor.addTextChangedListener(watcher)
+            historyWatchers.add(editor to watcher)
         }
         watch(binding.EnterTitle)
         watch(binding.EnterBody)
@@ -304,13 +307,30 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             if (model.restoringEditor) {
                 binding.EnterTitle.setText(model.title)
                 binding.RecyclerView.adapter?.notifyDataSetChanged()
-                binding.root.post { restoreHistorySelection(state) }
+                binding.root.post { if (!isDestroyed && !isFinishing) restoreHistorySelection(state) }
             }
         }
-        binding.Undo.setOnClickListener { model.history.undo() }
-        binding.Redo.setOnClickListener { model.history.redo() }
+        binding.Undo.setOnClickListener { applyHistory(false) }
+        binding.Redo.setOnClickListener { applyHistory(true) }
         binding.JumpTop.setOnClickListener { binding.ScrollView.scrollTo(0, 0) }
         binding.JumpBottom.setOnClickListener { binding.ScrollView.scrollTo(0, binding.ScrollView.getChildAt(0).height) }
+    }
+
+    private fun applyHistory(redo: Boolean) {
+        (binding.root.findFocus() as? EditText)?.text?.let(android.view.inputmethod.BaseInputConnection::removeComposingSpans)
+        if (redo) model.history.redo() else model.history.undo()
+        binding.root.post {
+            val editor = binding.root.findFocus() as? EditText
+            if (!isDestroyed && editor != null) {
+                (getSystemService(Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager).restartInput(editor)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        historyWatchers.forEach { (editor, watcher) -> editor.removeTextChangedListener(watcher) }
+        historyWatchers.clear()
+        super.onDestroy()
     }
 
     private fun setupInsets() {
@@ -331,8 +351,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
                 initialBottom + maxOf(bars.bottom, insets.getInsets(WindowInsetsCompat.Type.ime()).bottom),
             )
             if (imeBottom > previousImeBottom) {
-                root.doOnNextLayout {
-                    root.post { (currentFocus as? EditText)?.let(CursorVisibility::reveal) }
+                binding.ScrollView.doOnNextLayout {
+                    binding.ScrollView.post { (binding.ScrollView.findFocus() as? EditText)?.let(CursorVisibility::reveal) }
                 }
             }
             previousImeBottom = imeBottom

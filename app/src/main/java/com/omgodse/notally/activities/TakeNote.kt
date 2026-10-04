@@ -150,11 +150,12 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     companion object {
 
         fun getURLFrom(text: String): String {
+            val value = text.trim()
             return when {
-                text.matches(Patterns.PHONE.toRegex()) -> "tel:$text"
-                text.matches(Patterns.EMAIL_ADDRESS.toRegex()) -> "mailto:$text"
-                text.matches(Patterns.DOMAIN_NAME.toRegex()) -> "http://$text"
-                else -> text
+                value.matches(Patterns.EMAIL_ADDRESS.toRegex()) -> "mailto:$value"
+                value.matches(Patterns.PHONE.toRegex()) -> "tel:$value"
+                value.matches(Patterns.WEB_URL.toRegex()) && !value.contains("://") -> "https://$value"
+                else -> value
             }
         }
     }
