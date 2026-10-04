@@ -43,6 +43,7 @@ abstract class NotallyFragment : Fragment(), ItemListener {
 
         setupAdapter()
         setupRecyclerView()
+        binding?.let { it.FastScroll.bind(it.RecyclerView) }
         setupObserver()
     }
 

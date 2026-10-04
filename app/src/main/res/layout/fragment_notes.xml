@@ -14,14 +14,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView"
         android:layout_width="match_parent"
+        android:layout_toLeftOf="@id/FastScroll"
         android:layout_height="match_parent"
         android:layout_below="@id/RadioGroup"
         android:clipToPadding="false"
         android:paddingStart="4dp"
         android:paddingTop="8dp"
         android:paddingEnd="4dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical" />
+        android:scrollbars="none" />
 
     <RadioGroup
         android:id="@+id/RadioGroup"
@@ -57,4 +57,11 @@
 
     </RadioGroup>
 
+    <com.omgodse.notally.view.FastScrollView
+        android:id="@+id/FastScroll"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/RadioGroup"
+        android:visibility="invisible" />
 </RelativeLayout>
