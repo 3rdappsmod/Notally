@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Saltar arriba</string>
+    <string name="jump_to_bottom">Saltar abajo</string>
+    <string name="undo">Deshacer</string>
+    <string name="redo">Rehacer</string>
+    <string name="notes_sorted_by">Notas ordenadas por</string>
+    <string name="creation_date">Creado</string>
+    <string name="modified_date">Modificado</string>
+    <string name="ascending">Ascendente</string>
+    <string name="descending">Descendente</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Başa git</string>
+    <string name="jump_to_bottom">Sayfanın sonuna git</string>
+    <string name="undo">Geri Al</string>
+    <string name="redo">Tekrarla</string>
+    <string name="notes_sorted_by">Notlar şuna göre sıralanmıştır:</string>
+    <string name="creation_date">Oluşturuldu</string>
+    <string name="modified_date">Değiştirildi</string>
+    <string name="ascending">Artan</string>
+    <string name="descending">Aşağı doğru</string>
+</resources>

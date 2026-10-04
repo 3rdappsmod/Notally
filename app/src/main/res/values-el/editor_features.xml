@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Μετάβαση στην κορυφή της σελίδας</string>
+    <string name="jump_to_bottom">Μετάβαση στο τέλος της σελίδας</string>
+    <string name="undo">Αναίρεση</string>
+    <string name="redo">Επανάληψη</string>
+    <string name="notes_sorted_by">Σημειώσεις ταξινομημένες κατά</string>
+    <string name="creation_date">Δημιουργήθηκε</string>
+    <string name="modified_date">Τροποποιημένο</string>
+    <string name="ascending">Αύξουσα σειρά</string>
+    <string name="descending">Κατηφορική πορεία</string>
+</resources>

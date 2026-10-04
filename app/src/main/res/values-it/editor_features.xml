@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Vai in cima</string>
+    <string name="jump_to_bottom">Vai in fondo</string>
+    <string name="undo">Annulla</string>
+    <string name="redo">Ripeti</string>
+    <string name="notes_sorted_by">Ordina note per</string>
+    <string name="creation_date">Creata</string>
+    <string name="modified_date">Modificata</string>
+    <string name="ascending">Crescente</string>
+    <string name="descending">Decrescente</string>
+</resources>

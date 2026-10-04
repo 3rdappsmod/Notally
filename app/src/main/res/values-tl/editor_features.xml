@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Pumunta sa itaas</string>
+    <string name="jump_to_bottom">Pumunta sa ibaba</string>
+    <string name="undo">I-undo</string>
+    <string name="redo">Gawin muli</string>
+    <string name="notes_sorted_by">Ayusin ang mga tala ayon sa</string>
+    <string name="creation_date">Petsa ng paggawa</string>
+    <string name="modified_date">Petsa ng pagbabago</string>
+    <string name="ascending">Pataas</string>
+    <string name="descending">Pababa</string>
+</resources>

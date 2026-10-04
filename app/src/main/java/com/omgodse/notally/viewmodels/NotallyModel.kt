@@ -2,6 +2,9 @@ package com.omgodse.notally.viewmodels
 
 import android.app.AlarmManager
 import android.app.Application
+import com.omgodse.notally.EditorState
+import com.omgodse.notally.miscellaneous.Change
+import com.omgodse.notally.miscellaneous.ChangeHistory
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
@@ -99,6 +102,43 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var query = String()
     private var lastQuery = String()
     val marker = MarkerSpan(0) // Temporary color, NotallyActivity will assign actual color
+
+    val historyVersion = MutableLiveData(0)
+    val restoredEditor = MutableLiveData<EditorState>()
+    val history = ChangeHistory { historyVersion.value = (historyVersion.value ?: 0) + 1 }
+
+    fun editorState(start: Int = 0, end: Int = start, field: Int = -2) = EditorState(
+        title, body.toString(), getFilteredSpans(body), items.map { it.copy() }, start, end, field,
+    )
+
+    fun recordEditorChange(before: EditorState, after: EditorState) {
+        if (before.sameContent(after)) return
+        history.addChange(object : Change {
+            override val weight = before.body.length + after.body.length + before.title.length + after.title.length +
+                before.items.sumOf { it.body.length } + after.items.sumOf { it.body.length }
+            override fun undo() = restoreEditor(before)
+            override fun redo() = restoreEditor(after)
+        })
+    }
+
+    var restoringEditor = false
+        private set
+
+    private fun restoreEditor(state: EditorState) {
+        restoringEditor = true
+        try {
+        title = state.title
+        body.replace(0, body.length, state.body)
+        body.getSpans<android.text.style.CharacterStyle>().forEach { body.removeSpan(it) }
+        val restored = state.body.applySpans(state.spans)
+        restored.getSpans<Any>().forEach { span ->
+            body.setSpan(span, restored.getSpanStart(span), restored.getSpanEnd(span), restored.getSpanFlags(span))
+        }
+        items.clear()
+        items.addAll(state.items.map { it.copy() })
+        restoredEditor.value = state
+        } finally { restoringEditor = false }
+    }
 
     fun addAudio() {
         viewModelScope.launch {

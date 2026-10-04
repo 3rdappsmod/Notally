@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Перейти к началу страницы</string>
+    <string name="jump_to_bottom">Перейти в конец страницы</string>
+    <string name="undo">Вернуть</string>
+    <string name="redo">Вернуть</string>
+    <string name="notes_sorted_by">Сортировать заметки по</string>
+    <string name="creation_date">Создано</string>
+    <string name="modified_date">Изменено</string>
+    <string name="ascending">По возрастанию</string>
+    <string name="descending">По убыванию</string>
+</resources>

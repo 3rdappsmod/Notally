@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">ページトップへ</string>
+    <string name="jump_to_bottom">ページの下部へ移動</string>
+    <string name="undo">元に戻す</string>
+    <string name="redo">やり直し</string>
+    <string name="notes_sorted_by">並べ替え基準：</string>
+    <string name="creation_date">作成日</string>
+    <string name="modified_date">変更済み</string>
+    <string name="ascending">昇順</string>
+    <string name="descending">降順</string>
+</resources>

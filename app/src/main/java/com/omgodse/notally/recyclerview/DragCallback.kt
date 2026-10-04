@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.omgodse.notally.recyclerview.adapter.MakeListAdapter
-import java.util.Collections
 
 class DragCallback(private val elevation: Float, private val adapter: MakeListAdapter) : ItemTouchHelper.Callback() {
 
@@ -22,8 +21,8 @@ class DragCallback(private val elevation: Float, private val adapter: MakeListAd
     override fun onMove(view: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
         val from = viewHolder.bindingAdapterPosition
         val to = target.bindingAdapterPosition
-        Collections.swap(adapter.list, from, to)
-        adapter.notifyItemMoved(from, to)
+        if (from !in adapter.list.indices || to !in adapter.list.indices) return false
+        adapter.move(from, to)
         return true
     }
 

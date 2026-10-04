@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">맨 위로 이동</string>
+    <string name="jump_to_bottom">맨 아래로 이동</string>
+    <string name="undo">실행 취소</string>
+    <string name="redo">다시 실행</string>
+    <string name="notes_sorted_by">메모 정렬 기준</string>
+    <string name="creation_date">작성일</string>
+    <string name="modified_date">수정일</string>
+    <string name="ascending">오름차순</string>
+    <string name="descending">내림차순</string>
+</resources>

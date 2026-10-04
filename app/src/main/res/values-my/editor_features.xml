@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">ထိပ်ဆုံးသို့ တက်</string>
+    <string name="jump_to_bottom">အောက်ဆုံးသို့ တိုက်ရိုက်သွားပါ</string>
+    <string name="undo">ပြန်ဖျက်မည်</string>
+    <string name="redo">ပြန်လုပ်</string>
+    <string name="notes_sorted_by">အလိုက် စီထားသော မှတ်စုများ</string>
+    <string name="creation_date">ဖန်တီးခဲ့သည်</string>
+    <string name="modified_date">ပြင်ဆင်ထားသော</string>
+    <string name="ascending">တက်လာခြင်း</string>
+    <string name="descending">ဆင်းနေသည်</string>
+</resources>

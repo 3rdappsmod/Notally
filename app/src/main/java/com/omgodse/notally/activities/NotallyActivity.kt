@@ -12,6 +12,8 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.TextWatcher
+import com.omgodse.notally.EditorState
 import android.widget.EditText
 import androidx.core.view.doOnNextLayout
 import com.omgodse.notally.view.CursorVisibility
@@ -221,6 +223,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
             setStateFromModel()
 
             configureUI()
+            setupEditorHistory()
             binding.ScrollView.visibility = View.VISIBLE
         }
     }
@@ -246,6 +249,68 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     protected fun showIme(view: View) {
         WindowCompat.getInsetsController(window, view).show(WindowInsetsCompat.Type.ime())
+    }
+
+    protected fun captureEditorState(): EditorState {
+        val editor = currentFocus as? EditText
+        val field = when (editor) {
+            binding.EnterTitle -> -2
+            binding.EnterBody -> -1
+            else -> editor?.let { binding.RecyclerView.findContainingViewHolder(it)?.bindingAdapterPosition } ?: -2
+        }
+        return model.editorState(editor?.selectionStart ?: 0, editor?.selectionEnd ?: 0, field)
+    }
+
+    private var editorHistoryReady = false
+
+    protected fun recordEdit(action: () -> Unit) {
+        if (!editorHistoryReady || model.restoringEditor) { action(); return }
+        val before = captureEditorState()
+        action()
+        model.recordEditorChange(before, captureEditorState())
+    }
+
+    protected open fun restoreHistorySelection(state: EditorState) {
+        val editor = if (state.field == -1) binding.EnterBody else binding.EnterTitle
+        editor.requestFocus()
+        editor.setSelection(state.selectionStart.coerceIn(0, editor.length()), state.selectionEnd.coerceIn(0, editor.length()))
+        editor.post { CursorVisibility.reveal(editor) }
+    }
+
+    private fun setupEditorHistory() {
+        editorHistoryReady = true
+        fun watch(editor: EditText) {
+            editor.addTextChangedListener(object : TextWatcher {
+                private var before: EditorState? = null
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    before = if (model.restoringEditor) null else captureEditorState()
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable?) {
+                    before?.let { model.recordEditorChange(it, captureEditorState()) }
+                    before = null
+                }
+            })
+        }
+        watch(binding.EnterTitle)
+        watch(binding.EnterBody)
+        model.historyVersion.observe(this) {
+            binding.Undo.isEnabled = model.history.canUndo()
+            binding.Redo.isEnabled = model.history.canRedo()
+            binding.Undo.alpha = if (binding.Undo.isEnabled) 1f else 0.35f
+            binding.Redo.alpha = if (binding.Redo.isEnabled) 1f else 0.35f
+        }
+        model.restoredEditor.observe(this) { state ->
+            if (model.restoringEditor) {
+                binding.EnterTitle.setText(model.title)
+                binding.RecyclerView.adapter?.notifyDataSetChanged()
+                binding.root.post { restoreHistorySelection(state) }
+            }
+        }
+        binding.Undo.setOnClickListener { model.history.undo() }
+        binding.Redo.setOnClickListener { model.history.redo() }
+        binding.JumpTop.setOnClickListener { binding.ScrollView.scrollTo(0, 0) }
+        binding.JumpBottom.setOnClickListener { binding.ScrollView.scrollTo(0, binding.ScrollView.getChildAt(0).height) }
     }
 
     private fun setupInsets() {

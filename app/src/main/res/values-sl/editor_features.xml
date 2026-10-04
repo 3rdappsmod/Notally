@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Pojdi na vrh</string>
+    <string name="jump_to_bottom">Pojdi na dno strani</string>
+    <string name="undo">Razveljavi</string>
+    <string name="redo">Ponovi</string>
+    <string name="notes_sorted_by">Opombe, razvrščene po</string>
+    <string name="creation_date">Ustvarjeno</string>
+    <string name="modified_date">Spremenjeno</string>
+    <string name="ascending">Vzpon</string>
+    <string name="descending">Padanje</string>
+</resources>
