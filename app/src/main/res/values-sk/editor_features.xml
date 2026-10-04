@@ -10,4 +10,5 @@
     <string name="modified_date">Upravené</string>
     <string name="ascending">Vzostupný</string>
     <string name="descending">Klesajúce</string>
+    <string name="sort_direction">Smer triedenia</string>
 </resources>

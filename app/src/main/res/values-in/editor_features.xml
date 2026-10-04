@@ -10,4 +10,5 @@
     <string name="modified_date">Tanggal diubah</string>
     <string name="ascending">Menaik</string>
     <string name="descending">Menurun</string>
+    <string name="sort_direction">Arah pengurutan</string>
 </resources>

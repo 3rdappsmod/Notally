@@ -10,4 +10,5 @@
     <string name="modified_date">Gewijzigd</string>
     <string name="ascending">Oplopend</string>
     <string name="descending">Aflopend</string>
+    <string name="sort_direction">Sorteer volgorde</string>
 </resources>

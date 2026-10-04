@@ -10,4 +10,5 @@
     <string name="modified_date">수정일</string>
     <string name="ascending">오름차순</string>
     <string name="descending">내림차순</string>
+    <string name="sort_direction">정렬 방향</string>
 </resources>

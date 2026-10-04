@@ -10,4 +10,5 @@
     <string name="modified_date">Đã chỉnh sửa</string>
     <string name="ascending">Tăng dần</string>
     <string name="descending">Giảm dần</string>
+    <string name="sort_direction">Chiều sắp xếp</string>
 </resources>

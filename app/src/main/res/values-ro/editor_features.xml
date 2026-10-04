@@ -10,4 +10,5 @@
     <string name="modified_date">Modificat</string>
     <string name="ascending">Ascendent</string>
     <string name="descending">Descendent</string>
+    <string name="sort_direction">Direcția de sortare</string>
 </resources>

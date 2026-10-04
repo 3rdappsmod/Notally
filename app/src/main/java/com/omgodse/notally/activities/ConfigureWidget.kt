@@ -74,7 +74,7 @@ class ConfigureWidget : AppCompatActivity(), ItemListener {
         lifecycleScope.launch {
             val notes = withContext(Dispatchers.IO) {
                 val raw = database.getBaseNoteDao().getAllNotes()
-                BaseNoteModel.transform(raw, pinned, others)
+                BaseNoteModel.transform(com.omgodse.notally.preferences.NotesSort.sort(raw, preferences.notesSort.value, preferences.sortDirection.value), pinned, others)
             }
             adapter.submitList(notes)
         }

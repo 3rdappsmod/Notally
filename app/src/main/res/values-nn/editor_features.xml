@@ -10,4 +10,5 @@
     <string name="modified_date">Endra</string>
     <string name="ascending">Stigande</string>
     <string name="descending">Fallande</string>
+    <string name="sort_direction">Sorteringsretning</string>
 </resources>

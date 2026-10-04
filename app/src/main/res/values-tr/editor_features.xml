@@ -10,4 +10,5 @@
     <string name="modified_date">Değiştirildi</string>
     <string name="ascending">Artan</string>
     <string name="descending">Aşağı doğru</string>
+    <string name="sort_direction">Sıralama Yönü</string>
 </resources>

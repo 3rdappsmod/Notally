@@ -10,4 +10,5 @@
     <string name="modified_date">ပြင်ဆင်ထားသော</string>
     <string name="ascending">တက်လာခြင်း</string>
     <string name="descending">ဆင်းနေသည်</string>
+    <string name="sort_direction">စီစဉ်ရာ ဦးတည်ချက်</string>
 </resources>

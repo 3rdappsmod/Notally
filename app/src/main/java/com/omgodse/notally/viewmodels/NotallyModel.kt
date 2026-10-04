@@ -79,6 +79,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     var title = String()
     val pinned = BetterLiveData(false)
     var timestamp = System.currentTimeMillis()
+    var modifiedTimestamp = timestamp
 
     val labels = BetterLiveData(ArrayList<String>())
 
@@ -128,6 +129,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         restoringEditor = true
         try {
         title = state.title
+        android.view.inputmethod.BaseInputConnection.removeComposingSpans(body)
         body.replace(0, body.length, state.body)
         body.getSpans<android.text.style.CharacterStyle>().forEach { body.removeSpan(it) }
         val restored = state.body.applySpans(state.spans)
@@ -375,6 +377,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 title = baseNote.title
                 pinned.value = baseNote.pinned
                 timestamp = baseNote.timestamp
+                modifiedTimestamp = baseNote.modifiedTimestamp
 
                 labels.value = ArrayList(baseNote.labels)
 
@@ -429,6 +432,11 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
             deleted = true
             return@withLock 0L
         }
+        val note = getBaseNote()
+        val previous = withContext(Dispatchers.IO) { baseNoteDao.get(id) }
+        modifiedTimestamp = if (previous != null && note.copy(modifiedTimestamp = previous.modifiedTimestamp) == previous) {
+            previous.modifiedTimestamp
+        } else maxOf(System.currentTimeMillis(), (previous?.modifiedTimestamp ?: modifiedTimestamp) + 1)
         baseNoteDao.insert(getBaseNote())
     }
 
@@ -463,7 +471,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         val body = this.body.trimEnd().toString()
         val items = this.items.filter { item -> item.body.isNotEmpty() }.map { it.copy() }
         return BaseNote(id, type, folder, color.value, title, pinned.value, timestamp, labels.value.toList(), body, spans, items,
-            images.value.map { it.copy() }, audios.value.map { it.copy() }, reminder.value)
+            images.value.map { it.copy() }, audios.value.map { it.copy() }, reminder.value, modifiedTimestamp)
     }
 
     private fun getFilteredSpans(spanned: Spanned): ArrayList<SpanRepresentation> {

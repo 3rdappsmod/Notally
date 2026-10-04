@@ -10,4 +10,5 @@
     <string name="modified_date">Ændret</string>
     <string name="ascending">Stigende</string>
     <string name="descending">Faldende</string>
+    <string name="sort_direction">Sorteringsretning</string>
 </resources>

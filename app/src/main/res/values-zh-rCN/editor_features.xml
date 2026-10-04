@@ -10,4 +10,5 @@
     <string name="modified_date">修改时间</string>
     <string name="ascending">升序</string>
     <string name="descending">降序</string>
+    <string name="sort_direction">排列方向</string>
 </resources>

@@ -10,4 +10,5 @@
     <string name="modified_date">Petsa ng pagbabago</string>
     <string name="ascending">Pataas</string>
     <string name="descending">Pababa</string>
+    <string name="sort_direction">Direksiyon ng pag-aayos</string>
 </resources>

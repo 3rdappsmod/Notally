@@ -18,6 +18,9 @@
             android:id="@+id/View"
             layout="@layout/preference" />
 
+        <include android:id="@+id/NotesSort" layout="@layout/preference" />
+        <include android:id="@+id/SortDirection" layout="@layout/preference" />
+
         <include
             android:id="@+id/Theme"
             layout="@layout/preference" />
