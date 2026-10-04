@@ -60,6 +60,43 @@ class NotallyModelTest {
     }
 
     @Test
+    fun reopeningReadsLatestDatabaseStateAfterWidgetUpdate() = runTest {
+        model.type = Type.LIST
+        model.setState(0)
+        model.items.add(ListItem("task", false))
+        model.saveNote()
+        val dao = database.getBaseNoteDao()
+        val old = requireNotNull(dao.get(model.id))
+        // A previously loaded list snapshot still has the old check state.
+        dao.updateChecked(model.id, 0, true, "task")
+        assertFalse(old.items.single().checked)
+        val reopened = NotallyModel(app)
+        reopened.setState(model.id)
+        assertTrue(reopened.items.single().checked)
+        reopened.saveNote()
+        assertTrue(requireNotNull(dao.get(model.id)).items.single().checked)
+    }
+
+    @Test
+    fun saveNormalizesWhitespaceWithoutChangingLiveEditorText() = runTest {
+        model.type = Type.LIST
+        model.setState(0)
+        model.title = "  title  "
+        model.items.addAll(listOf(ListItem("  task  ", false), ListItem("   ", false)))
+        model.saveNote()
+        val saved = requireNotNull(database.getBaseNoteDao().get(model.id))
+        assertEquals("title", saved.title)
+        assertEquals(listOf(ListItem("task", false)), saved.items)
+        assertEquals("  title  ", model.title)
+        assertEquals("  task  ", model.items[0].body)
+        model.title = "   "
+        model.items.clear()
+        model.items.add(ListItem("   ", false))
+        model.saveNote(discardEmptyDraft = true)
+        assertNull(database.getBaseNoteDao().get(model.id))
+    }
+
+    @Test
     fun newReminderUsesPersistedIdAndCanBeCancelled() = runTest {
         model.setState(0)
         val reminder = Reminder(System.currentTimeMillis() + 60000, Frequency.ONCE)

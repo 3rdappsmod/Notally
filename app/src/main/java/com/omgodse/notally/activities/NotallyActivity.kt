@@ -382,7 +382,8 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
     open fun setupListeners() {
         binding.EnterTitle.doAfterTextChanged { text ->
-            model.title = requireNotNull(text).trim().toString()
+            // Keep exactly what is being edited for Undo/Redo; normalize only when saving.
+            model.title = requireNotNull(text).toString()
         }
     }
 

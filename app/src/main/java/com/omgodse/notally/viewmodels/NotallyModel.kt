@@ -25,7 +25,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.omgodse.notally.AttachmentDeleteService
-import com.omgodse.notally.Cache
 import com.omgodse.notally.MarkerSpan
 import com.omgodse.notally.Progress
 import com.omgodse.notally.R
@@ -366,8 +365,9 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
         if (id != 0L) {
             isNewNote = false
 
-            val cachedNote = Cache.list.find { baseNote -> baseNote.id == id }
-            val baseNote = cachedNote ?: withContext(Dispatchers.IO) { baseNoteDao.get(id) }
+            // Room observers update list screens asynchronously after widget/other writes.
+            // Load the authoritative row before opening an editor that can write it back.
+            val baseNote = withContext(Dispatchers.IO) { baseNoteDao.get(id) }
 
             if (baseNote != null) {
                 this.id = id
@@ -384,7 +384,7 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
                 body = baseNote.body.applySpans(baseNote.spans)
 
                 items.clear()
-                items.addAll(baseNote.items)
+                items.addAll(baseNote.items.map { it.copy() })
 
                 images.value = baseNote.images
                 audios.value = baseNote.audios
@@ -442,9 +442,9 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
 
     private fun isEmpty(): Boolean {
         val bodyText = body.trimEnd().toString()
-        return title.isEmpty() &&
+        return title.isBlank() &&
             bodyText.isEmpty() &&
-            items.none { item -> item.body.isNotEmpty() } &&
+            items.none { item -> item.body.isNotBlank() } &&
             images.value.isEmpty() &&
             audios.value.isEmpty() &&
             reminder.value == null &&
@@ -469,8 +469,8 @@ class NotallyModel(private val app: Application) : AndroidViewModel(app) {
     private fun getBaseNote(): BaseNote {
         val spans = getFilteredSpans(body)
         val body = this.body.trimEnd().toString()
-        val items = this.items.filter { item -> item.body.isNotEmpty() }.map { it.copy() }
-        return BaseNote(id, type, folder, color.value, title, pinned.value, timestamp, labels.value.toList(), body, spans, items,
+        val items = this.items.map { it.copy(body = it.body.trim()) }.filter { it.body.isNotEmpty() }
+        return BaseNote(id, type, folder, color.value, title.trim(), pinned.value, timestamp, labels.value.toList(), body, spans, items,
             images.value.map { it.copy() }, audios.value.map { it.copy() }, reminder.value, modifiedTimestamp)
     }
 

@@ -3,7 +3,6 @@ package com.omgodse.notally.activities
 import android.os.Bundle
 import com.omgodse.notally.EditorState
 import com.omgodse.notally.view.CursorVisibility
-import java.util.Collections
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.RecyclerView
@@ -107,9 +106,10 @@ class MakeList : NotallyActivity(Type.LIST) {
             }
 
             override fun move(from: Int, to: Int) {
-                if (from !in model.items.indices || to !in model.items.indices) return
+                if (from !in model.items.indices || to !in model.items.indices || from == to) return
                 recordEdit {
-                    Collections.swap(model.items, from, to)
+                    // notifyItemMoved shifts the intervening rows; it does not swap endpoints.
+                    model.items.add(to, model.items.removeAt(from))
                     adapter.notifyItemMoved(from, to)
                 }
             }
