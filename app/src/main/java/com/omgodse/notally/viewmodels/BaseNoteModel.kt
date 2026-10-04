@@ -20,7 +20,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.omgodse.notally.ActionMode
 import com.omgodse.notally.AttachmentDeleteService
-import com.omgodse.notally.Cache
 import com.omgodse.notally.Progress
 import com.omgodse.notally.R
 import com.omgodse.notally.ReminderReceiver
@@ -79,7 +78,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     val preferences = Preferences.getInstance(app)
 
     val labels = labelDao.getAll()
-    private val allNotes = baseNoteDao.getAll()
     val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform, preferences.notesSort, preferences.sortDirection)
     val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform, preferences.notesSort, preferences.sortDirection)
     val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform, preferences.notesSort, preferences.sortDirection)
@@ -119,9 +117,6 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
                     Migrations.clearAllFolders(app)
                 }
             }
-        }
-        allNotes.observeForever { list ->
-            Cache.list = list
         }
     }
 

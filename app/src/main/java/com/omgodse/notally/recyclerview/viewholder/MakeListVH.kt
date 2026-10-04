@@ -30,7 +30,7 @@ class MakeListVH(
 
         binding.EditText.doAfterTextChanged { text ->
             if (!bindingItem && bindingAdapterPosition != RecyclerView.NO_POSITION)
-                listener.textChanged(bindingAdapterPosition, requireNotNull(text).trim().toString())
+                listener.textChanged(bindingAdapterPosition, requireNotNull(text).toString())
         }
 
         binding.Delete.setOnClickListener {

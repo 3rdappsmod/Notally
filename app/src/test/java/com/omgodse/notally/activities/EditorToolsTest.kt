@@ -34,7 +34,7 @@ import org.robolectric.util.ReflectionHelpers
 class EditorToolsTest {
     @Before fun setUp() { Dispatchers.setMain(StandardTestDispatcher()) }
     @After fun tearDown() { Dispatchers.resetMain() }
-    private fun layout(activity: TakeNote) {
+    private fun layout(activity: NotallyActivity) {
         activity.binding.root.apply {
             measure(View.MeasureSpec.makeMeasureSpec(400, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(800, View.MeasureSpec.EXACTLY))
             layout(0, 0, 400, 800)
@@ -129,6 +129,61 @@ class EditorToolsTest {
         assertEquals("before", recreated.binding.EnterBody.text.toString())
         recreated.binding.Undo.performClick()
         assertEquals("", recreated.binding.EnterBody.text.toString())
+        controller.pause().stop().destroy()
+    }
+
+    @Test fun titleUndoPreservesTypedWhitespace() = runTest {
+        val controller = Robolectric.buildActivity(TakeNote::class.java).create().start().resume().visible()
+        val activity = controller.get()
+        ReflectionHelpers.getField<Job>(activity, "initialization").join()
+        val editor = activity.binding.EnterTitle
+        editor.requestFocus()
+        editor.text.append("hello")
+        editor.text.append(" ")
+        editor.text.append("world")
+        activity.binding.Undo.performClick()
+        assertEquals("hello ", editor.text.toString())
+        activity.binding.Redo.performClick()
+        assertEquals("hello world", editor.text.toString())
+        controller.pause().stop().destroy()
+    }
+
+    @Test fun checklistUndoPreservesTypedWhitespace() = runTest {
+        val controller = Robolectric.buildActivity(MakeList::class.java).create().start().resume().visible()
+        val activity = controller.get()
+        ReflectionHelpers.getField<Job>(activity, "initialization").join()
+        layout(activity)
+        shadowOf(Looper.getMainLooper()).idle()
+        val holder = activity.binding.RecyclerView.findViewHolderForAdapterPosition(0)
+            as com.omgodse.notally.recyclerview.viewholder.MakeListVH
+        holder.binding.EditText.requestFocus()
+        holder.binding.EditText.text.append("hello")
+        holder.binding.EditText.text.append(" ")
+        holder.binding.EditText.text.append("world")
+        activity.binding.Undo.performClick()
+        assertEquals("hello ", activity.model.items[0].body)
+        activity.binding.Redo.performClick()
+        assertEquals("hello world", activity.model.items[0].body)
+        controller.pause().stop().destroy()
+    }
+
+    @Test fun movingAcrossSeveralRowsKeepsIntermediateOrderAndCanBeUndone() = runTest {
+        val controller = Robolectric.buildActivity(MakeList::class.java).create().start().resume().visible()
+        val activity = controller.get()
+        ReflectionHelpers.getField<Job>(activity, "initialization").join()
+        activity.model.items.clear()
+        activity.model.items.addAll(listOf("a", "b", "c", "d").map { ListItem(it, false) })
+        val adapter = activity.binding.RecyclerView.adapter as com.omgodse.notally.recyclerview.adapter.MakeListAdapter
+        adapter.notifyDataSetChanged()
+        layout(activity)
+        adapter.move(0, 3)
+        assertEquals(listOf("b", "c", "d", "a"), activity.model.items.map { it.body })
+        activity.binding.Undo.performClick()
+        assertEquals(listOf("a", "b", "c", "d"), activity.model.items.map { it.body })
+        activity.binding.Redo.performClick()
+        assertEquals(listOf("b", "c", "d", "a"), activity.model.items.map { it.body })
+        adapter.move(3, 0)
+        assertEquals(listOf("a", "b", "c", "d"), activity.model.items.map { it.body })
         controller.pause().stop().destroy()
     }
 
