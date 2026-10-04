@@ -120,6 +120,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
+        android:layout_toLeftOf="@id/FastScroll"
         android:layout_height="match_parent"
         android:layout_below="@id/ToolbarContainer"
         android:fillViewport="true"
@@ -253,4 +254,11 @@
 
 
 
+    <com.omgodse.notally.view.FastScrollView
+        android:id="@+id/FastScroll"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ToolbarContainer"
+        android:visibility="invisible" />
 </RelativeLayout>

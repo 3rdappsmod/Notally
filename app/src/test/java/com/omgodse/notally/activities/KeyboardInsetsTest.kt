@@ -13,6 +13,8 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,6 +41,16 @@ class KeyboardInsetsTest {
         val originalBottom = view.paddingBottom
         dispatch(600)
         assertEquals(originalBottom + 600, view.paddingBottom)
+        view.measure(View.MeasureSpec.makeMeasureSpec(400, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY))
+        view.layout(0, 0, 400, 1000)
+        val bar = view.findViewById<View>(R.id.FastScroll)
+        assertNotNull(bar)
+        val rootPosition = IntArray(2)
+        val barPosition = IntArray(2)
+        view.getLocationOnScreen(rootPosition)
+        bar.getLocationOnScreen(barPosition)
+        assertTrue(barPosition[1] + bar.height <= rootPosition[1] + view.height - view.paddingBottom)
         // Repeated delivery must not accumulate padding.
         dispatch(600)
         assertEquals(originalBottom + 600, view.paddingBottom)
@@ -54,8 +66,10 @@ class KeyboardInsetsTest {
     }
 
     @Test fun searchKeepsResultsAboveKeyboard() {
-        val controller = Robolectric.buildActivity(MainActivity::class.java).create()
+        val controller = Robolectric.buildActivity(MainActivity::class.java).create().start().resume()
+        controller.get().supportFragmentManager.executePendingTransactions()
+        (controller.get().supportFragmentManager.findFragmentById(R.id.NavHostFragment) as androidx.navigation.fragment.NavHostFragment).childFragmentManager.executePendingTransactions()
         verifyKeyboardSpace(controller.get().findViewById(R.id.RelativeLayout))
-        controller.destroy()
+        controller.pause().stop().destroy()
     }
 }

@@ -88,6 +88,9 @@ class EditorToolsTest {
         val viewport = IntArray(2)
         activity.binding.ScrollView.getLocationOnScreen(viewport)
         assertTrue("caret=$caretBottom viewport=${viewport[1] + activity.binding.ScrollView.height}", caretBottom <= viewport[1] + activity.binding.ScrollView.height)
+        assertEquals(activity.binding.ScrollView.bottom, activity.binding.FastScroll.bottom)
+        assertTrue(activity.binding.FastScroll.bottom <= activity.binding.root.height - 300)
+        assertTrue(activity.binding.ScrollView.right <= activity.binding.FastScroll.left)
         // The editor commands share the top toolbar in the requested order.
         assertSame(activity.binding.Toolbar, activity.binding.EditorActions.parent)
         val actions = listOf(activity.binding.JumpTop, activity.binding.JumpBottom,

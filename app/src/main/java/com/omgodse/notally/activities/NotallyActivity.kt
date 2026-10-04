@@ -201,6 +201,7 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
         initialiseBinding()
         setContentView(binding.root)
         setupInsets()
+        binding.FastScroll.bind(binding.ScrollView)
 
         initialization = lifecycleScope.launch {
             if (model.isFirstInstance) {
