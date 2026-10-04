@@ -1,5 +1,6 @@
 package com.omgodse.notally.room
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -19,5 +20,6 @@ data class BaseNote(
     val items: List<ListItem>,
     val images: List<Image>,
     val audios: List<Audio>,
-    val reminder: Reminder?
+    val reminder: Reminder?,
+    @ColumnInfo(defaultValue = "0") val modifiedTimestamp: Long = timestamp
 ) : Item

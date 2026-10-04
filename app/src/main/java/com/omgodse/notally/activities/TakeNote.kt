@@ -72,7 +72,7 @@ class TakeNote : NotallyActivity(Type.NOTE) {
                             mode?.finish()
                         }
                         menu.add(R.string.clear_formatting, 0) {
-                            removeSpans()
+                            recordEdit { removeSpans() }
                             mode?.finish()
                         }
                     }
@@ -136,7 +136,7 @@ class TakeNote : NotallyActivity(Type.NOTE) {
         val selectionStart = binding.EnterBody.selectionStart
 
         ifBothNotNullAndInvalid(selectionStart, selectionEnd) { start, end ->
-            binding.EnterBody.text?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            recordEdit { binding.EnterBody.text?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE) }
         }
     }
 
@@ -150,11 +150,12 @@ class TakeNote : NotallyActivity(Type.NOTE) {
     companion object {
 
         fun getURLFrom(text: String): String {
+            val value = text.trim()
             return when {
-                text.matches(Patterns.PHONE.toRegex()) -> "tel:$text"
-                text.matches(Patterns.EMAIL_ADDRESS.toRegex()) -> "mailto:$text"
-                text.matches(Patterns.DOMAIN_NAME.toRegex()) -> "http://$text"
-                else -> text
+                value.matches(Patterns.EMAIL_ADDRESS.toRegex()) -> "mailto:$value"
+                value.matches(Patterns.PHONE.toRegex()) -> "tel:$value"
+                value.matches(Patterns.WEB_URL.toRegex()) && !value.contains("://") -> "https://$value"
+                else -> value
             }
         }
     }

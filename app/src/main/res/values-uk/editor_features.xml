@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Вгору</string>
+    <string name="jump_to_bottom">Донизу</string>
+    <string name="undo">Відмінити</string>
+    <string name="redo">Повторити</string>
+    <string name="notes_sorted_by">Сортувати за</string>
+    <string name="creation_date">Створено</string>
+    <string name="modified_date">Змінено</string>
+    <string name="ascending">За зростанням</string>
+    <string name="descending">За спаданням</string>
+    <string name="sort_direction">Напрямок сортування</string>
+</resources>

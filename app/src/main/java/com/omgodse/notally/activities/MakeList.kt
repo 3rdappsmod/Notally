@@ -1,6 +1,9 @@
 package com.omgodse.notally.activities
 
 import android.os.Bundle
+import com.omgodse.notally.EditorState
+import com.omgodse.notally.view.CursorVisibility
+import java.util.Collections
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +54,22 @@ class MakeList : NotallyActivity(Type.LIST) {
         }
     }
 
+    override fun restoreHistorySelection(state: EditorState) {
+        if (state.field < 0 || state.field !in model.items.indices) {
+            super.restoreHistorySelection(state)
+            return
+        }
+        binding.RecyclerView.doOnPreDraw {
+            val editor = (binding.RecyclerView.findViewHolderForAdapterPosition(state.field) as? MakeListVH)?.binding?.EditText
+            if (editor != null && editor.isEnabled) {
+                editor.requestFocus()
+                editor.setSelection(state.selectionStart.coerceIn(0, editor.length()), state.selectionEnd.coerceIn(0, editor.length()))
+                CursorVisibility.reveal(editor)
+            }
+        }
+        binding.RecyclerView.requestLayout()
+    }
+
     override fun configureUI() {
         // Keep the checklist visible when editing its title in landscape too.
         binding.EnterTitle.imeOptions = binding.EnterTitle.imeOptions or EditorInfo.IME_FLAG_NO_FULLSCREEN
@@ -80,8 +99,19 @@ class MakeList : NotallyActivity(Type.LIST) {
         adapter = MakeListAdapter(model.textSize, elevation, model.items, object : ListItemListener {
 
             override fun delete(position: Int) {
-                model.items.removeAt(position)
-                adapter.notifyItemRemoved(position)
+                if (position !in model.items.indices) return
+                recordEdit {
+                    model.items.removeAt(position)
+                    adapter.notifyItemRemoved(position)
+                }
+            }
+
+            override fun move(from: Int, to: Int) {
+                if (from !in model.items.indices || to !in model.items.indices) return
+                recordEdit {
+                    Collections.swap(model.items, from, to)
+                    adapter.notifyItemMoved(from, to)
+                }
             }
 
             override fun moveToNext(position: Int) {
@@ -89,11 +119,11 @@ class MakeList : NotallyActivity(Type.LIST) {
             }
 
             override fun textChanged(position: Int, text: String) {
-                model.items[position].body = text
+                if (position in model.items.indices) recordEdit { model.items[position].body = text }
             }
 
             override fun checkedChanged(position: Int, checked: Boolean) {
-                model.items[position].checked = checked
+                if (position in model.items.indices) recordEdit { model.items[position].checked = checked }
             }
         })
 
@@ -104,8 +134,10 @@ class MakeList : NotallyActivity(Type.LIST) {
     private fun addListItem() {
         val position = model.items.size
         val listItem = ListItem(String(), false)
-        model.items.add(listItem)
-        adapter.notifyItemInserted(position)
+        recordEdit {
+            model.items.add(listItem)
+            adapter.notifyItemInserted(position)
+        }
         binding.RecyclerView.post {
             val viewHolder = binding.RecyclerView.findViewHolderForAdapterPosition(position) as MakeListVH?
             if (viewHolder != null) {

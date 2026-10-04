@@ -34,8 +34,8 @@ interface BaseNoteDao {
 
 
     @Query(
-        "INSERT INTO BaseNote (type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios)\n" +
-                "SELECT type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios\n" +
+        "INSERT INTO BaseNote (type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios, reminder, modifiedTimestamp)\n" +
+                "SELECT type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios, NULL, modifiedTimestamp\n" +
                 "FROM BaseNote WHERE id IN (:ids)"
     )
     suspend fun copy(ids: LongArray)
@@ -91,30 +91,30 @@ interface BaseNoteDao {
     suspend fun getDeletedNoteAudios(): List<String>
 
 
-    @Query("UPDATE BaseNote SET folder = :folder WHERE id IN (:ids)")
-    suspend fun move(ids: LongArray, folder: Folder)
+    @Query("UPDATE BaseNote SET folder = :folder, modifiedTimestamp = :modifiedTimestamp WHERE id IN (:ids)")
+    suspend fun move(ids: LongArray, folder: Folder, modifiedTimestamp: Long = System.currentTimeMillis())
 
 
-    @Query("UPDATE BaseNote SET color = :color WHERE id IN (:ids)")
-    suspend fun updateColor(ids: LongArray, color: Color)
+    @Query("UPDATE BaseNote SET color = :color, modifiedTimestamp = :modifiedTimestamp WHERE id IN (:ids)")
+    suspend fun updateColor(ids: LongArray, color: Color, modifiedTimestamp: Long = System.currentTimeMillis())
 
-    @Query("UPDATE BaseNote SET pinned = :pinned WHERE id IN (:ids)")
-    suspend fun updatePinned(ids: LongArray, pinned: Boolean)
+    @Query("UPDATE BaseNote SET pinned = :pinned, modifiedTimestamp = :modifiedTimestamp WHERE id IN (:ids)")
+    suspend fun updatePinned(ids: LongArray, pinned: Boolean, modifiedTimestamp: Long = System.currentTimeMillis())
 
-    @Query("UPDATE BaseNote SET labels = :labels WHERE id = :id")
-    suspend fun updateLabels(id: Long, labels: List<String>)
+    @Query("UPDATE BaseNote SET labels = :labels, modifiedTimestamp = :modifiedTimestamp WHERE id = :id")
+    suspend fun updateLabels(id: Long, labels: List<String>, modifiedTimestamp: Long = System.currentTimeMillis())
 
-    @Query("UPDATE BaseNote SET items = :items WHERE id = :id")
-    suspend fun updateItems(id: Long, items: List<ListItem>)
+    @Query("UPDATE BaseNote SET items = :items, modifiedTimestamp = :modifiedTimestamp WHERE id = :id")
+    suspend fun updateItems(id: Long, items: List<ListItem>, modifiedTimestamp: Long = System.currentTimeMillis())
 
-    @Query("UPDATE BaseNote SET images = :images WHERE id = :id")
-    suspend fun updateImages(id: Long, images: List<Image>)
+    @Query("UPDATE BaseNote SET images = :images, modifiedTimestamp = :modifiedTimestamp WHERE id = :id")
+    suspend fun updateImages(id: Long, images: List<Image>, modifiedTimestamp: Long = System.currentTimeMillis())
 
-    @Query("UPDATE BaseNote SET audios = :audios WHERE id = :id")
-    suspend fun updateAudios(id: Long, audios: List<Audio>)
+    @Query("UPDATE BaseNote SET audios = :audios, modifiedTimestamp = :modifiedTimestamp WHERE id = :id")
+    suspend fun updateAudios(id: Long, audios: List<Audio>, modifiedTimestamp: Long = System.currentTimeMillis())
 
-    @Query("UPDATE BaseNote SET reminder = :reminder WHERE id = :id")
-    suspend fun updateReminder(id: Long, reminder: Reminder?)
+    @Query("UPDATE BaseNote SET reminder = :reminder, modifiedTimestamp = :modifiedTimestamp WHERE id = :id")
+    suspend fun updateReminder(id: Long, reminder: Reminder?, modifiedTimestamp: Long = System.currentTimeMillis())
 
 
     /** Ignore stale widget clicks, and serialize the read/modify/write of the item list. */

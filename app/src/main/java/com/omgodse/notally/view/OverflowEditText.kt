@@ -13,6 +13,13 @@ class OverflowEditText(context: Context, attrs: AttributeSet) : AppCompatEditTex
 
     var isActionModeOn = false
 
+    override fun onSelectionChanged(selStart: Int, selEnd: Int) {
+        super.onSelectionChanged(selStart, selEnd)
+        if (isAttachedToWindow && hasFocus()) {
+            post { CursorVisibility.reveal(this) }
+        }
+    }
+
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         if (!isActionModeOn) {
             super.onWindowFocusChanged(hasWindowFocus)

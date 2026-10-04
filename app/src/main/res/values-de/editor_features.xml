@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Springe zum Start</string>
+    <string name="jump_to_bottom">Springe ans Ende</string>
+    <string name="undo">Wiederholen</string>
+    <string name="redo">Rückgängig</string>
+    <string name="notes_sorted_by">Notizen sortieren nach</string>
+    <string name="creation_date">Erstellt</string>
+    <string name="modified_date">Geändert</string>
+    <string name="ascending">Aufsteigend</string>
+    <string name="descending">Absteigend</string>
+    <string name="sort_direction">Reihenfolge</string>
+</resources>

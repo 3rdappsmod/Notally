@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Ugrás a lap tetejére</string>
+    <string name="jump_to_bottom">Ugrás az oldal aljára</string>
+    <string name="undo">Visszavonás</string>
+    <string name="redo">Újra</string>
+    <string name="notes_sorted_by">Jegyzetek rendezése:</string>
+    <string name="creation_date">Létrehozva</string>
+    <string name="modified_date">Módosítva</string>
+    <string name="ascending">Növekvő</string>
+    <string name="descending">Csökkenő</string>
+    <string name="sort_direction">Rendezés iránya</string>
+</resources>

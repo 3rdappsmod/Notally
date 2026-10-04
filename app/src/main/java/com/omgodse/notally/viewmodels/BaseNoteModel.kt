@@ -76,25 +76,26 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     var currentFile: File? = null
 
+    val preferences = Preferences.getInstance(app)
+
     val labels = labelDao.getAll()
     private val allNotes = baseNoteDao.getAll()
-    val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform)
-    val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform)
-    val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform)
+    val baseNotes = Content(baseNoteDao.getFrom(Folder.NOTES), ::transform, preferences.notesSort, preferences.sortDirection)
+    val deletedNotes = Content(baseNoteDao.getFrom(Folder.DELETED), ::transform, preferences.notesSort, preferences.sortDirection)
+    val archivedNotes = Content(baseNoteDao.getFrom(Folder.ARCHIVED), ::transform, preferences.notesSort, preferences.sortDirection)
 
     val searchQuery = BetterLiveData(Pair(String(), Folder.NOTES))
     val searchResults = searchQuery.switchMap { (keyword, folder) ->
         if (keyword.isEmpty()) {
             MutableLiveData(emptyList())
         } else {
-            baseNoteDao.getBaseNotesByKeyword(keyword, folder).map(::transform)
+            Content(baseNoteDao.getBaseNotesByKeyword(keyword, folder), ::transform, preferences.notesSort, preferences.sortDirection)
         }
     }
 
     private val pinned = Header(app.getString(R.string.pinned))
     private val others = Header(app.getString(R.string.others))
 
-    val preferences = Preferences.getInstance(app)
 
     val mediaRoot = IO.getExternalImagesDirectory(app)
     private val audioRoot = IO.getExternalAudioDirectory(app)
@@ -126,7 +127,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
 
     fun getNotesByLabel(label: String): Content {
         if (labelCache[label] == null) {
-            labelCache[label] = Content(baseNoteDao.getBaseNotesByLabel(label), ::transform)
+            labelCache[label] = Content(baseNoteDao.getBaseNotesByLabel(label), ::transform, preferences.notesSort, preferences.sortDirection)
         }
         return requireNotNull(labelCache[label])
     }
@@ -147,7 +148,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    private fun transform(list: List<BaseNote>) = transform(list, pinned, others)
+    private fun transform(list: List<BaseNote>) = transform(com.omgodse.notally.preferences.NotesSort.sort(list, preferences.notesSort.value, preferences.sortDirection.value), pinned, others)
 
 
     fun savePreference(info: SeekbarInfo, value: Int) = executeAsync { preferences.savePreference(info, value) }
@@ -382,7 +383,9 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             }
         }
 
-        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios, reminder)
+        val modifiedIndex = cursor.getColumnIndex("modifiedTimestamp")
+        val modified = if (modifiedIndex >= 0 && !cursor.isNull(modifiedIndex)) cursor.getLong(modifiedIndex) else timestamp
+        return BaseNote(0, type, folder, color, title, pinned, timestamp, labels, body, spans, items, images, audios, reminder, modified)
     }
 
     private fun <T> convertCursorToList(cursor: Cursor, convert: (cursor: Cursor) -> T): ArrayList<T> {
@@ -603,6 +606,7 @@ class BaseNoteModel(private val app: Application) : AndroidViewModel(app) {
             .put("title", baseNote.title)
             .put("pinned", baseNote.pinned)
             .put("date-created", baseNote.timestamp)
+            .put("date-modified", baseNote.modifiedTimestamp)
             .put("labels", JSONArray(baseNote.labels))
 
         when (baseNote.type) {

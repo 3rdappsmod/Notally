@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Ke paling atas</string>
+    <string name="jump_to_bottom">Ke paling bawah</string>
+    <string name="undo">Urungkan</string>
+    <string name="redo">Ulangi</string>
+    <string name="notes_sorted_by">Urutkan catatan menurut</string>
+    <string name="creation_date">Tanggal dibuat</string>
+    <string name="modified_date">Tanggal diubah</string>
+    <string name="ascending">Menaik</string>
+    <string name="descending">Menurun</string>
+    <string name="sort_direction">Arah pengurutan</string>
+</resources>

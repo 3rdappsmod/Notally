@@ -19,6 +19,8 @@ class Preferences private constructor(app: Application) {
 
     // Main thread (unfortunately)
     val view = BetterLiveData(getListPref(View))
+    val notesSort = BetterLiveData(getListPref(NotesSort))
+    val sortDirection = BetterLiveData(getListPref(SortDirection))
     val theme = BetterLiveData(getListPref(Theme))
     val dateFormat = BetterLiveData(getListPref(DateFormat))
 
@@ -84,6 +86,8 @@ class Preferences private constructor(app: Application) {
         editor.putString(info.key, value)
         editor.commit()
         when (info) {
+            NotesSort -> notesSort.postValue(getListPref(info))
+            SortDirection -> sortDirection.postValue(getListPref(info))
             View -> view.postValue(getListPref(info))
             Theme -> theme.postValue(getListPref(info))
             DateFormat -> dateFormat.postValue(getListPref(info))

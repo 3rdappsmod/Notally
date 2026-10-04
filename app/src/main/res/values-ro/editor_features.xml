@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Mergi la începutul paginii</string>
+    <string name="jump_to_bottom">Mergi la sfârșit</string>
+    <string name="undo">Anulează</string>
+    <string name="redo">Repetă</string>
+    <string name="notes_sorted_by">Note sortate după</string>
+    <string name="creation_date">Creat</string>
+    <string name="modified_date">Modificat</string>
+    <string name="ascending">Ascendent</string>
+    <string name="descending">Descendent</string>
+    <string name="sort_direction">Direcția de sortare</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Chuyển lên đầu</string>
+    <string name="jump_to_bottom">Chuyển xuống cuối</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="redo">Thực hiện lại thao tác</string>
+    <string name="notes_sorted_by">Ghi chú sắp xếp theo</string>
+    <string name="creation_date">Đã tạo</string>
+    <string name="modified_date">Đã chỉnh sửa</string>
+    <string name="ascending">Tăng dần</string>
+    <string name="descending">Giảm dần</string>
+    <string name="sort_direction">Chiều sắp xếp</string>
+</resources>

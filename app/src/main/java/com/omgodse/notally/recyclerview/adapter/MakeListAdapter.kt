@@ -25,6 +25,8 @@ class MakeListAdapter(
     }
 
 
+    fun move(from: Int, to: Int) = listener.move(from, to)
+
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: MakeListVH, position: Int) {

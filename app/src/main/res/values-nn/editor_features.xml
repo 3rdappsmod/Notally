@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Gå til toppen</string>
+    <string name="jump_to_bottom">Gå til botnen</string>
+    <string name="undo">Angre</string>
+    <string name="redo">Gjer om</string>
+    <string name="notes_sorted_by">Sorter notat etter</string>
+    <string name="creation_date">Oppretta</string>
+    <string name="modified_date">Endra</string>
+    <string name="ascending">Stigande</string>
+    <string name="descending">Fallande</string>
+    <string name="sort_direction">Sorteringsretning</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Prejsť na začiatok stránky</string>
+    <string name="jump_to_bottom">Prejsť na koniec stránky</string>
+    <string name="undo">Vrátiť späť</string>
+    <string name="redo">Zopakovať</string>
+    <string name="notes_sorted_by">Poznámky zoradené podľa</string>
+    <string name="creation_date">Vytvorené</string>
+    <string name="modified_date">Upravené</string>
+    <string name="ascending">Vzostupný</string>
+    <string name="descending">Klesajúce</string>
+    <string name="sort_direction">Smer triedenia</string>
+</resources>

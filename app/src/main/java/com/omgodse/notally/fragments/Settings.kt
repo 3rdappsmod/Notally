@@ -48,6 +48,9 @@ class Settings : Fragment() {
             binding.View.setup(View, value)
         }
 
+        model.preferences.notesSort.observe(viewLifecycleOwner) { binding.NotesSort.setup(NotesSort, it) }
+        model.preferences.sortDirection.observe(viewLifecycleOwner) { binding.SortDirection.setup(SortDirection, it) }
+
         model.preferences.theme.observe(viewLifecycleOwner) { value ->
             binding.Theme.setup(Theme, value)
         }

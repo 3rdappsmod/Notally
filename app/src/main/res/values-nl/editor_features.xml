@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NotallyX translations; source and adaptation details are in docs/editor-features-ko.md. -->
+<resources>
+    <string name="jump_to_top">Naar boven</string>
+    <string name="jump_to_bottom">Ga naar onderaan de pagina</string>
+    <string name="undo">Ongedaan maken</string>
+    <string name="redo">Opnieuw doen</string>
+    <string name="notes_sorted_by">Notities gesorteerd op</string>
+    <string name="creation_date">Gemaakt</string>
+    <string name="modified_date">Gewijzigd</string>
+    <string name="ascending">Oplopend</string>
+    <string name="descending">Aflopend</string>
+    <string name="sort_direction">Sorteer volgorde</string>
+</resources>

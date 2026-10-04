@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/ToolbarContainer"
+        android:layout_above="@id/EditorActions"
         android:fillViewport="true"
         android:theme="@style/Colorless"
         android:visibility="gone">
@@ -175,4 +176,52 @@
 
     </androidx.core.widget.NestedScrollView>
 
+
+    <LinearLayout
+        android:id="@+id/EditorActions"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/JumpTop"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/jump_to_top"
+            android:focusable="false"
+            app:srcCompat="@drawable/vertical_align_top"
+            app:tint="?attr/colorControlNormal" />
+        <ImageButton
+            android:id="@+id/Undo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/undo"
+            android:focusable="false"
+            app:srcCompat="@drawable/undo"
+            app:tint="?attr/colorControlNormal" />
+        <ImageButton
+            android:id="@+id/Redo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/redo"
+            android:focusable="false"
+            app:srcCompat="@drawable/redo"
+            app:tint="?attr/colorControlNormal" />
+        <ImageButton
+            android:id="@+id/JumpBottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/jump_to_bottom"
+            android:focusable="false"
+            app:srcCompat="@drawable/vertical_align_bottom"
+            app:tint="?attr/colorControlNormal" />
+    </LinearLayout>
 </RelativeLayout>

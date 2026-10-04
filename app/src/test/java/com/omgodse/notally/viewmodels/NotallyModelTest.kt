@@ -47,6 +47,19 @@ class NotallyModelTest {
     }
 
     @Test
+    fun modifiedDateChangesOnlyWhenNoteChanges() = runTest {
+        model.setState(0)
+        model.title = "persisted"
+        model.saveNote()
+        val modified = requireNotNull(database.getBaseNoteDao().get(model.id)).modifiedTimestamp
+        model.saveNote()
+        assertEquals(modified, database.getBaseNoteDao().get(model.id)?.modifiedTimestamp)
+        model.body.append("new text")
+        model.saveNote()
+        assertTrue(requireNotNull(database.getBaseNoteDao().get(model.id)).modifiedTimestamp > modified)
+    }
+
+    @Test
     fun newReminderUsesPersistedIdAndCanBeCancelled() = runTest {
         model.setState(0)
         val reminder = Reminder(System.currentTimeMillis() + 60000, Frequency.ONCE)

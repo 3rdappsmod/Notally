@@ -18,6 +18,8 @@ class MakeListVH(
     textSize: String
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private var bindingItem = false
+
     init {
         val body = TextSize.getEditBodySize(textSize)
         binding.EditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, body)
@@ -27,7 +29,8 @@ class MakeListVH(
         }
 
         binding.EditText.doAfterTextChanged { text ->
-            listener.textChanged(bindingAdapterPosition, requireNotNull(text).trim().toString())
+            if (!bindingItem && bindingAdapterPosition != RecyclerView.NO_POSITION)
+                listener.textChanged(bindingAdapterPosition, requireNotNull(text).trim().toString())
         }
 
         binding.Delete.setOnClickListener {
@@ -36,7 +39,7 @@ class MakeListVH(
 
         binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
             binding.EditText.isEnabled = !isChecked
-            listener.checkedChanged(bindingAdapterPosition, isChecked)
+            if (!bindingItem && bindingAdapterPosition != RecyclerView.NO_POSITION) listener.checkedChanged(bindingAdapterPosition, isChecked)
         }
 
         binding.DragHandle.setOnTouchListener { _, event ->
@@ -48,8 +51,11 @@ class MakeListVH(
     }
 
     fun bind(item: ListItem) {
+        bindingItem = true
         binding.root.reset()
         binding.EditText.setText(item.body)
         binding.CheckBox.isChecked = item.checked
+        binding.EditText.isEnabled = !item.checked
+        bindingItem = false
     }
 }
