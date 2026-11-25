@@ -1,6 +1,6 @@
 [versions]
 junit = "4.13.2"
-robolectric = "4.18"
+robolectric = "4.18.1"
 coroutinesTest = "1.11.0"
 agp = "9.5.1"
 kotlin = "2.4.21"
